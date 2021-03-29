@@ -10,7 +10,18 @@
 input:focus, input:active{
   outline: none !important;
 }
-
+@font-face {
+  font-family: 'CB_StemRegular';
+  src: url('CB_Stem-Regular.eot');
+  src:
+          url('/fonts/CB_Stem-Regular.eot?#iefix') format('embedded-opentype'),
+          url('/fonts/CB_Stem-Regular.ttf') format('truetype'),
+          url('/fonts/CB_Stem-Regular.woff2') format('woff2'),
+          url('/fonts/CB_Stem-Regular.woff') format('woff'),
+          url('/fonts/CB_Stem-Regular.svg#CB_Stem-Regular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
 @font-face {
   font-family: 'Stem';
   src: url('/fonts/Stem-Light.eot');
@@ -74,6 +85,8 @@ input:focus, input:active{
   url('/fonts/Stem-Thin.woff2') format('woff2'),
   url('/fonts/Stem-Thin.woff') format('woff'),
   url('/fonts/Stem-Thin.ttf') format('truetype');
+  font-weight: 400;
+  font-family: 'CB_StemRegular';
   font-weight: 400;
   font-style: normal;
 }
@@ -408,6 +421,7 @@ h1{
   margin-bottom: 48px;
 }
 .pgmItemSpeakersTitle{
+  font-family: 'CB_StemRegular';
   font-weight: 400;
   font-size: 16px;
   line-height: 28px;
