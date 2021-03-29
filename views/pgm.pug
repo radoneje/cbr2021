@@ -15,7 +15,7 @@
                     .pgmItemSpeakersTitle(v-for="section in event.sections") {{section.sectionTitle}}
                         .pgmItemSpeakersWr
                             .pgmItemSpeakerItem(v-for="spk in getSpeakes(section.users)")
-                                .pgmItemSpeakerItemPhoto(:style="{ backgroundImage: `url(${spk.photo?spk.photo:''})` }")
+                                .pgmItemSpeakerItemPhoto(:style="{ backgroundImage: `url(${spk.photo?spk.photo:'/images/nouser.png'})` }")
                                 .pgmItemSpeakerItemName  {{getSpkInit(spk)}}
                     //.pgmItemSpeakersTitle(v-if="getModerators(event).length>0") Модератор
                         .pgmItemSpeakersWr
