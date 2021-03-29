@@ -16,11 +16,11 @@ var pgm=new Vue({
             ret+=" "+ spk.o.substr(0,1).toUpperCase()+"."
             return ret;
         },
-        getSpeakes:function (event) {
+        getSpeakes:function (users) {
             var ret=[];
             this.speakers.forEach(s=>{
-                if(event.speakers)
-                event.speakers.forEach(ss=>{
+                if(users)
+                    users.forEach(ss=>{
                     if(s.id==ss)
                         ret.push(s)
                 })

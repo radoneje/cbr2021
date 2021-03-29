@@ -12,19 +12,15 @@
             .pgmItemBody
                 .pgmItemTitle {{event.title}}
                 .pgmItemSpeakers
-                    .pgmItemSpeakersTitle(v-if="getSpeakes(event).length>0") Спикер
+                    .pgmItemSpeakersTitle(v-for="section in event.sections") {{section.sectionTitle}}
                         .pgmItemSpeakersWr
-                            .pgmItemSpeakerItem(v-for="spk in getSpeakes(event)")
+                            .pgmItemSpeakerItem(v-for="spk in getSpeakes(section.users)")
                                 .pgmItemSpeakerItemPhoto(:style="{ backgroundImage: `url(${spk.photo?spk.photo:''})` }")
                                 .pgmItemSpeakerItemName  {{getSpkInit(spk)}}
-                    .pgmItemSpeakersTitle(v-if="getModerators(event).length>0") Модератор
+                    //.pgmItemSpeakersTitle(v-if="getModerators(event).length>0") Модератор
                         .pgmItemSpeakersWr
                             .pgmItemSpeakerItem(v-for="spk in getModerators(event)")
                                 .pgmItemSpeakerItemPhoto(:style="{ backgroundImage: `url(${spk.photo?spk.photo:''})` }")
                                 .pgmItemSpeakerItemName  {{getSpkInit(spk)}}
-                    .pgmItemSpeakersTitle(v-if="getUsers(event).length>0") Участники
-                        .pgmItemSpeakersWr
-                            .pgmItemSpeakerItem(v-for="spk in getUsers(event)")
-                                .pgmItemSpeakerItemPhoto(:style="{ backgroundImage: `url(${spk.photo?spk.photo:''})` }")
-                                .pgmItemSpeakerItemName  {{getSpkInit(spk)}}
+
 
