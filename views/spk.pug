@@ -4,5 +4,6 @@
             .spkItem(v-for="item in speakers")
                 .spkItemPhoto
                     .spkItemPhotoWr(:style="{ backgroundImage: `url(${item.photo?item.photo:'/images/nouser.png'})` }")
-                .spkItemName {{item.f}} {{item.i}} {{item.o}}
-                .spkItemPos  {{item.position}}
+                .spkItemNameWr
+                    .spkItemName {{item.f}} {{item.i}} {{item.o}}
+                    .spkItemPos  {{item.position}}
