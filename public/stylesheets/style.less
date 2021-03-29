@@ -209,6 +209,13 @@ body {
   max-width: 1366px;
   margin: 0 auto;
   position: relative;
+  box-sizing: border-box;
+  padding: 0 40px;
+}
+.headerTower{
+  max-width: 1366px;
+  margin: 0 auto;
+  position: relative;
 }
 .pgmMenu{
   display: flex;
@@ -409,16 +416,18 @@ body {
   align-items: center;
 }
 h2{
-  font-weight: 500;
+  font-weight: 200;
   font-size: 48px;
   line-height: 62px;
-  margin-bottom: 1em;
+  margin-bottom: 0.2em;
 }
 h1{
   font-weight: 500;
   font-size: 48px;
   line-height: 62px;
-  margin-bottom: 48px;
+  margin-bottom: 32px;
+  width: 50%;
+  margin-top:0 ;
 }
 .pgmItemSpeakersTitle{
 
@@ -478,6 +487,102 @@ h1{
 .pgmItemSpeakers{
   margin-top:12px
   }
+.headerBox{
+  position: relative;
+  background: yellow;
+  height: 550px;
+  overflow:hidden;
+}
+.pgm{
+  margin-top:48px;
+}
+
+
+.tower.headerTower{
+  padding: 0;
+}
+.layerBack{
+  position: absolute;
+  width: 125%;
+  top: 0;
+  left: 0;
+
+  height: 100%;
+  background-image: url(/images/layerback.png);
+  background-size: 100%;
+  background-position: right;
+  background-position-y: 10%;
+}
+.layerCol1{
+  position: absolute;
+  top: 45%;
+  right: 14%;
+  width: 10%;
+  height: 51%;
+  background-image: url(/images/colBlue.svg);
+  background-repeat: no-repeat;
+  background-position-y: 100%;
+  background-size: contain;
+}
+.layerCol2{
+   position: absolute;
+   top: 47%;
+   right: 4.7%;
+   width: 5.7%;
+   height: 51%;
+   background-image: url(/images/colYellow.svg);
+   background-repeat: no-repeat;
+   background-position-y: 100%;
+   background-size: contain;
+ }
+.layerCol3{
+  position: absolute;
+  top: 46%;
+  right: 29.7%;
+  width: 3.7%;
+  height: 51%;
+  background-image: url(/images/colRed.svg);
+  background-repeat: no-repeat;
+  background-position-y: 100%;
+  background-size: contain;
+}
+.layerFront{
+  width: 125%;
+  position: absolute;
+  top: 7.3%;
+  left: 0;
+
+  height: 100%;
+  background-image: url(/images/layerfront.png);
+  background-size: 100%;
+  background-position: right;
+  background-position-y: -8%;
+  background-repeat: no-repeat;
+  display: block;
+}
+.headerTitleWr{
+  position: absolute;
+  top: 32px;
+  color: white;
+  left: 0;
+}
+.headerDate{
+  position: relative;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.headerDateIco{
+  font-size: 20px;
+  line-height: 26px;
+margin-right: .5em;
+}
+.headerDateTitle{
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 26px;
+}
 
 
 @media (max-width:1366px) {
@@ -494,12 +599,17 @@ h1{
     width: 100%;
   }
   h1{
-    font-size: 32px;
-    line-height: 44px;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 32px;
+    width: 100%;
   }
   h2{
-    font-size: 24px;
-    line-height: 31px;
+    font-size: 18px;
+    line-height: 23px;
+  }
+  .headerBox{
+    height: 100vh;
   }
   .pgmTitle{
     font-size: 24px;
@@ -570,6 +680,39 @@ h1{
     display: block;
     flex-wrap: wrap;
     gap: 0px 0;
+  }
+  .layerBack {
+    position: absolute;
+    width: 125%;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-image: url(/images/layerback.png);
+    background-size: cover;
+    background-position: top;
+    background-position-y: 0;
+    background-repeat: no-repeat;
+  }
+  .layerFront{
+    position: absolute;
+    width: 125%;
+    top: 17%;
+    left: 0;
+    height: 100%;
+    background-image: url(/images/layerfront.png);
+    background-size: cover;
+    background-position: top;
+    background-position-y: 0;
+    background-repeat: no-repeat;
+  }
+  .layerCol1{
+    top: 32%;
+  }
+  .layerCol2{
+    top: 23%;
+  }
+  .layerCol3{
+    top: 35%;
   }
 
 
