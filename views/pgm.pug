@@ -1,0 +1,30 @@
+.pgm#pgm
+    .pgmTitle Программа
+    .pgmMenu
+        .pgmMenuItem(v-for="item in content.pgm" v-bind:class="{active:item.isActive, selected:pgmItem==item}" v-on:click="if(item.isActive) pgmItem=item")
+            .pgmMenuItemTitle
+                div {{item.title}}
+                    .pgmMenuItemSubTitle(v-if="!item.isActive") Закрытое мероприятие
+    .pgmBody
+        .pgmItem(v-for="event in pgmItem.events")
+            .pgmItemTime
+                .pgmItemTimeBody {{event.time}}
+            .pgmItemBody
+                .pgmItemTitle {{event.title}}
+                .pgmItemSpeakers
+                    .pgmItemSpeakersTitle(v-if="getSpeakes(event).length>0") Спикер
+                        .pgmItemSpeakersWr
+                            .pgmItemSpeakerItem(v-for="spk in getSpeakes(event)")
+                                .pgmItemSpeakerItemPhoto(:style="{ backgroundImage: `url(${spk.photo?spk.photo:''})` }")
+                                .pgmItemSpeakerItemName  {{getSpkInit(spk)}}
+                    .pgmItemSpeakersTitle(v-if="getModerators(event).length>0") Модератор
+                        .pgmItemSpeakersWr
+                            .pgmItemSpeakerItem(v-for="spk in getModerators(event)")
+                                .pgmItemSpeakerItemPhoto(:style="{ backgroundImage: `url(${spk.photo?spk.photo:''})` }")
+                                .pgmItemSpeakerItemName  {{getSpkInit(spk)}}
+                    .pgmItemSpeakersTitle(v-if="getUsers(event).length>0") Участники
+                        .pgmItemSpeakersWr
+                            .pgmItemSpeakerItem(v-for="spk in getUsers(event)")
+                                .pgmItemSpeakerItemPhoto(:style="{ backgroundImage: `url(${spk.photo?spk.photo:''})` }")
+                                .pgmItemSpeakerItemName  {{getSpkInit(spk)}}
+
