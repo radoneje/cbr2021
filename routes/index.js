@@ -39,4 +39,14 @@ router.get('/index/:lang?', async (req, res, next) =>{
 
 });
 
+router.get('/zoom/:id', async (req, res, next) =>{
+  //res.render('work', { title: 'under constaction' });
+  var ret=await req.knex.select("*").from("t_cbrf_redirect").where({id:req.params.id});
+  if(ret.length<1)
+    return res.sendStatus(404);
+
+  res.redirect(ret[0].value)
+
+});
+
 module.exports = router;

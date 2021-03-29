@@ -12,8 +12,20 @@ var app=new Vue({
         stat:{},
         spk:[],
         newSpk:{photo:null,f:"",i:"",o:"",position:"", id:0},
+        redirect:[],
+        newRedirect:{},
     },
     methods:{
+        editRedirect:async function(item){
+            console.log("edit redirect", item)
+            var ret= await axios.post("/api/redirect", item);
+            item=ret.data;
+        },
+        addRedirect:async function(item){
+            var ret= await axios.post("/api/redirectAdd", item);
+            this.redirect.push(ret.data);
+            this.newRedirect={};
+        },
         repositionSpk:async function(item, count){
             item.sortOrder+=count;
             var ret= await axios.post("/api/repositionSpk", item);
@@ -200,6 +212,11 @@ var app=new Vue({
             if(this.sect==5){
                 var ret=await axios.get("/api/spk");
                 this.spk=ret.data;
+                setTimeout(()=>{ this.showLoader=false;},200)
+            }
+            if(this.sect==6){
+                var ret=await axios.get("/api/redirect");
+                this.redirect=ret.data;
                 setTimeout(()=>{ this.showLoader=false;},200)
             }
         }

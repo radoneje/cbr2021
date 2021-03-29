@@ -132,6 +132,23 @@ router.post('/spk/', adminLogin ,async(req, res, next)=> {
   var ret=await req.knex("t_cbrf_spk").update(req.body, "*").where({id:id})
   res.json(ret[0]);
 });
+router.get('/redirect', adminLogin ,async(req, res, next)=> {
+  var ret=await req.knex.select("*").from("t_cbrf_redirect").orderBy("id")
+  res.json(ret);
+});
+
+router.post('/redirect', adminLogin ,async(req, res, next)=> {
+ var id=req.body.id;
+ console.log("dd", req.body)
+ delete req.body.id;
+  var ret=await req.knex("t_cbrf_redirect").update({value:req.body.value}, "*").where({id:id});
+  res.json(ret[0]);
+});
+router.post('/redirectAdd', adminLogin ,async(req, res, next)=> {
+  var ret=await req.knex("t_cbrf_redirect").insert({value:req.body.value}, "*");
+  res.json(ret[0]);
+});
+
 router.post('/repositionSpk/', adminLogin ,async(req, res, next)=> {
 
   var id=req.body.id;
