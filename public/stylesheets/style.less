@@ -600,14 +600,135 @@ margin-right: .5em;
   padding: 32px;
   background: @white;
   border-radius: 12px;
+  box-sizing: border-box;
 }
 .loginTitle{
   font-weight: 500;
   font-size: 24px;
   line-height: 32px;
   color: @gray;
+  margin-bottom: 32px;
 }
+.regInput{
 
+  border: 1px solid @litegray;
+  border-radius: 8px;
+  background: @white;
+  width: 100%;
+  font-size: 14px;
+  box-sizing: border-box;
+  margin-top: 10px;
+  color:@gray;
+  transition: color .5s ease;
+  padding: 15px 12px;
+  font-family: Stem;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 18px;
+  position: relative;
+
+
+}
+.divRegInputLogo{
+  position: absolute;
+  right: 22px;
+  top: 16px;
+}
+.divRegInput{
+  position: relative;
+  cursor: pointer;
+  border: 1px solid @litegray;
+  border-radius: 8px;
+  background: @white;
+  width: 100%;
+  font-size: 14px;
+  box-sizing: border-box;
+  margin-top: 10px;
+  color:@gray;
+  transition: color .5s ease;
+  padding: 15px 12px;
+  display: flex;
+  font-family: Stem;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 18px;
+}
+.regInput:focus, .regInput:active{
+  color: @color;
+}
+.DeptDialog{
+
+  position: absolute;
+  background: @white;
+  width: ~"calc(100% + 2px)";
+  left: -1px;
+  top: 16px;
+  z-index: 100;
+  box-sizing: border-box;
+  border-radius: 8px;
+  border: 1px solid @litegray;
+  box-shadow: 0 4px 12px @gray;
+  padding: 32px;
+  overflow-y: scroll;
+  max-height: 217px;
+}
+.divRegInputText{
+  width: ~"calc(100% - 32px)";
+}
+.deptDialogItem{
+  cursor: pointer;
+  padding: 0 8px;
+  margin-bottom: 8px;
+  position: relative;
+}
+.deptDialogItem.active:before{
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: -16px;
+  width: 1em;
+  height: 1em;
+  background: url(/images/chevron.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.deptDialogItem:hover{
+color:@color
+}
+.regInputError{
+  height: 1.5em;
+  font-size: 12px;
+  color: @red;
+}
+.regInputErrorTitle{
+  transition: opacity .5s ease;
+  opacity: 0;
+}
+.regInputErrorTitle.active{
+  opacity: 1;
+};
+.regInput::placeholder{
+  color: @gray;
+}
+.regBtn{
+  width: 100%;
+  font-size: 18px;
+  color: white;
+  background: @green;
+  box-shadow: 0px 4px 12px rgba(0, 136, 187, 0.16);
+  border-radius: 8px;
+  cursor: pointer;
+  height: 48px;
+  border: none;
+  margin-top:32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color .5s ease;
+  cursor: pointer;
+}
 
 @media (max-width:1366px) {
 .tower{
@@ -619,7 +740,14 @@ margin-right: .5em;
   .underWork{
     align-items: flex-end;
     padding-bottom: 60px;
-
+    display: block;
+    background-position-x: center;
+  }
+  .loginWr{
+    margin: 32px auto;
+    padding: 16px 32px;
+    margin-top: 75vh;
+    margin-bottom: 0;
   }
   .tower{
     padding: 0 20px
