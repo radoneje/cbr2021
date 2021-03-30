@@ -40,6 +40,21 @@ router.get('/index/:lang?', async (req, res, next) =>{
 
 });
 
+router.get('/test/:lang?', async (req, res, next) =>{
+  if(!req.params.lang)
+    req.params.lang="ru"
+  req.params.lang=req.params.lang.toLowerCase();
+  if(!(req.params.lang=="ru" || req.params.lang=="en"))
+    res.redirect("/index/ru")
+  //res.render('work', { title: 'under constaction' });
+  var content=await req.knex.select("*").from("t_cbrf_settings").orderBy("id", 'desc')
+  var speakers=await req.knex.select("*").from("t_cbrf_spk").orderBy("sortOrder")
+  //res.redirect("/login/ru")
+ // res.sendStatus(404)
+   res.render('index', {  lang:req.params.lang, speakers:speakers, site:content[0].site, content:content[0].content });
+
+});
+
 router.get('/zoom/:id', async (req, res, next) =>{
   //res.render('work', { title: 'under constaction' });
   var ret=await req.knex.select("*").from("t_cbrf_redirect").where({id:req.params.id});
