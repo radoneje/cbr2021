@@ -35,7 +35,8 @@ router.get('/index/:lang?', async (req, res, next) =>{
   var content=await req.knex.select("*").from("t_cbrf_settings").orderBy("id", 'desc')
   var speakers=await req.knex.select("*").from("t_cbrf_spk").orderBy("sortOrder")
   //res.redirect("/login/ru")
-  res.sendStatus(404)
+      // res.sendStatus(404)
+  res.render('start')
  // res.render('index', {  lang:req.params.lang, speakers:speakers, site:content[0].site, content:content[0].content });
 
 });
