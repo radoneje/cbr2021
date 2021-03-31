@@ -6,6 +6,7 @@ var pgm=new Vue({
         speakers:speakers,
     },
     methods:{
+
         getSpkInit:function(spk){
             var ret=spk.f;
             if(!spk.i || spk.i.length==0)
@@ -21,8 +22,10 @@ var pgm=new Vue({
             this.speakers.forEach(s=>{
                 if(users)
                     users.forEach(ss=>{
-                    if(s.id==ss)
+                    if(s.id==ss.id) {
+                        s.theme=ss.theme
                         ret.push(s)
+                    }
                 })
             })
             console.log("speakers", ret)

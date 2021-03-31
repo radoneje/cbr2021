@@ -42,6 +42,7 @@ router.get('/index/:lang?', async (req, res, next) =>{
 });
 
 router.get('/login/:lang?', async (req, res, next) =>{
+  req.session["user"]=null;
   if(!req.params.lang)
     req.params.lang="ru"
   if(!(req.params.lang=="ru" || req.params.lang=="en"))

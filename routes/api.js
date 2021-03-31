@@ -236,5 +236,20 @@ router.get('/count', function(req, res, next) {
   res.json(req.counter.length);
 });
 
+router.post('/registerUser', async(req, res, next) =>{
+
+  var ret=await req.knex.select("*").from("t_cbrf_codes").where({code:req.body.code,f:req.body.f});
+  if(ret.length==0)
+    return res.json({status:-1});
+  req.body.deptId=req.body.dept.id;
+  delete req.body.dept;
+  req.body.date=new Date();
+  ret=await req.knex("t_cbrf_users").insert(req.body, "*");
+  req.session["user"]=ret[0];
+  res.json({status:1});
+});
+
+
+
 
 module.exports = router;

@@ -14,9 +14,11 @@
                 .pgmItemSpeakers
                     .pgmItemSpeakersTitle(v-for="section in event.sections") {{section.sectionTitle}}
                         .pgmItemSpeakersWr
-                            .pgmItemSpeakerItem(v-for="spk in getSpeakes(section.users)")
-                                .pgmItemSpeakerItemPhoto(:style="{ backgroundImage: `url(${spk.photo?spk.photo:'/images/nouser.png'})` }")
-                                .pgmItemSpeakerItemName  {{getSpkInit(spk)}}
+                            .pgmItemSpeakerItemWr(v-for="spk in getSpeakes(section.users)")
+                                .pgmItemSpeakerItem
+                                    .pgmItemSpeakerItemPhoto(:style="{ backgroundImage: `url(${spk.photo?spk.photo:'/images/nouser.png'})` }")
+                                    .pgmItemSpeakerItemName  {{getSpkInit(spk)}}
+                                .pgmItemSpeakerItemTheme(v-if="spk.theme && spk.theme.length>0") {{spk.theme}}
                     //.pgmItemSpeakersTitle(v-if="getModerators(event).length>0") Модератор
                         .pgmItemSpeakersWr
                             .pgmItemSpeakerItem(v-for="spk in getModerators(event)")
