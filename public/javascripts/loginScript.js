@@ -1,7 +1,7 @@
 var login=new Vue({
     el:"#app",
     data:{
-        user:{f:"",i:"",code:"",dept:{id:null, title:"Подразделение"}},
+        user:{f:"",i:"",code:"",dept:{id:null, title:"Подразделение*"}},
         err:{f:false, i:false, code:false,dept:false, codeUncorrect:false},
         showDeptDialog:false,
         dept:dept,
@@ -12,7 +12,8 @@ var login=new Vue({
         void:function(){;;},
         deptChange:function(item){
             this.user.dept=item;
-            setTimeout(()=>{ this.showDeptDialog=false;},0)
+
+            setTimeout(()=>{ this.showDeptDialog=false; this.err.dept=false;},0)
         },
         register:async function(){
             this.checkf(this.user.f);
@@ -30,7 +31,8 @@ var login=new Vue({
             },1000)
         },
         checkDep:function(f){
-            this.err.err=this.user.dept.id?false:true;
+
+            this.err.dept=this.user.dept.id==null;
         },
         checkf:function(f){
             this.err.f=false ;

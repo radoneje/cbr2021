@@ -65,7 +65,7 @@ html
                             .DeptDialog(v-show="showDeptDialog" style="display: none;")
                                 .deptDialogItem(v-for="item in dept" v-bind:class="{active:(item.id==user.dept.id)}" v-on:click="deptChange(item)") {{item.title}}
                         .regInputError
-                            .regInputErrorTitle(v-bind:class="{active:err.dep}")
+                            .regInputErrorTitle(v-bind:class="{active:err.dept}") Подразделение должнло быть выбрано
                         input.regInput#codeinput(type="text" placeholder="Код" + "*" v-model="user.code" v-on:change="checkCode(user.code)")
                         .regInputError
                             .regInputErrorTitle(v-bind:class="{active:err.code}") Поле должно быть заполнено корректно
