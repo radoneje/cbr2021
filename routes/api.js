@@ -137,6 +137,16 @@ router.get('/redirect', adminLogin ,async(req, res, next)=> {
   res.json(ret);
 });
 
+router.get('/codes', adminLogin ,async(req, res, next)=> {
+  var ret=await req.knex.select("*").from("t_cbrf_codes").orderBy("io").orderBy("f")
+  res.json(ret);
+});
+router.post('/codes', adminLogin ,async(req, res, next)=> {
+
+   let ret=await req.knex("t_cbrf_codes").insert(req.body.users,"*");
+  res.json(ret);
+});
+
 router.post('/redirect', adminLogin ,async(req, res, next)=> {
  var id=req.body.id;
  console.log("dd", req.body)

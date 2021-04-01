@@ -18,6 +18,7 @@ html
           .aminMenuItem(v-on:click="sect=4" v-bind:class="{active:sect==4}") Статистика
           .aminMenuItem(v-on:click="sect=3" v-bind:class="{active:sect==3}") Контент
           .aminMenuItem(v-on:click="sect=5" v-bind:class="{active:sect==5}") Спикеры
+          .aminMenuItem(v-on:click="sect=7" v-bind:class="{active:sect==7}") Коды
           .aminMenuItem(v-on:click="sect=6" v-bind:class="{active:sect==6}") Редирект
       .adminWr
         .adminSect(v-if="sect==0")
@@ -150,6 +151,24 @@ html
                     input(v-model="newRedirect.value" placeholder="URL редиректа")
                   .adminSpkItemPosition
                     button(v-on:click="addRedirect(newRedirect)") Добавить редирект
+        .adminSect(v-if="sect==7" )
+          .adminSectLoader.loaderWr(v-if="showLoader")
+            .loader
+            .loaderText идет загрузка...
+          .adminBody(v-show="!showLoader")
+            .adminSectTitle Коды доступа ({{codes.length}})
+            .adminSpkItem(v-for="rr in codes")
+              .adminSpkItemWr
+                .adminSpkItemId {{rr.code}} {{rr.f}} {{rr.io}} {{rr.sourceDept}}
+
+            .adminSpkItem
+              .adminSpkItemWr
+                .adminSpkItemId НОВЫЙ КОД по одному в строку, формат: code;Ф;И O;depatment
+                  .adminSpkItemPosition
+                    textarea#newCode(placeholder="" style="height:10em; padding:4px;width:400px;resize:none;margin:12px 0")
+                  .adminSpkItemPosition
+                    button(v-on:click="addCode(document.getElementById('newCode').value)") Добавить коды
+
 
 
 

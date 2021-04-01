@@ -11,11 +11,53 @@ var app=new Vue({
         descr:{content:"",speakers:"",site:""},
         stat:{},
         spk:[],
+        codes:[],
         newSpk:{photo:null,f:"",i:"",o:"",position:"", id:0},
         redirect:[],
         newRedirect:{},
     },
     methods:{
+        addCode:async function(txt){
+            var ret=[];
+            var err=false;
+            let arrayOfLines = txt.match(/[^\r\n]+/g);
+            txt.match(/[^\r\n]+/g).forEach(line=>{
+                var item=line.split(";");
+                if(item.length>=2){
+                    item[0]=item[0].trim();
+                    if(isNormalInteger(item[0])) {
+                        item[1] = item[1].trim();
+                        item[1] = item[1].substr(0, 1).toUpperCase() + item[1].substring(1);
+                        var elem={
+                            code:item[0],
+                            f:item[1],
+                            io:item[2],
+                            sourceDept:item[3]
+                        }
+                        ret.push(elem)
+                    }
+                    else
+                        err=true
+
+                }
+                else
+                    err=true;
+            })
+            if(err)
+                alert("ошибка формата");
+            else{
+                if(ret.length>0) {
+                    console.log("addcode", ret)
+                    var str = await axios.post('/api/codes',{users:ret});
+                    str.data.forEach(s=>{
+                        this.codes.push(s);
+                    })
+                    alert("коды добавлены!")
+
+                }
+            }
+
+        },
         editRedirect:async function(item){
             console.log("edit redirect", item)
             var ret= await axios.post("/api/redirect", item);
@@ -219,6 +261,11 @@ var app=new Vue({
                 this.redirect=ret.data;
                 setTimeout(()=>{ this.showLoader=false;},200)
             }
+            if(this.sect==7){
+                var ret=await axios.get("/api/codes");
+                this.codes=ret.data;
+                setTimeout(()=>{ this.showLoader=false;},200)
+            }
         }
     },
     mounted:function () {
@@ -226,3 +273,6 @@ var app=new Vue({
         setTimeout(()=>{ this.loaded=true; this.sect=0},0)
     }
 })
+function isNormalInteger(str) {
+    return /^\+?(0|[1-9]\d*)$/.test(str);
+}
