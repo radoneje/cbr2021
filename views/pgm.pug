@@ -12,7 +12,7 @@
             .pgmItemBody
                 .pgmItemTitle {{event.title}}
                 .pgmItemSpeakers
-                    .pgmItemSpeakersTitle(v-for="section in event.sections") {{section.sectionTitle}}
+                    .pgmItemSpeakersTitle(v-for="section in event.sections" v-html="section.sectionTitle")
                         .pgmItemSpeakersWr
                             .pgmItemSpeakerItemWr(v-for="spk in getSpeakes(section.users)")
                                 .pgmItemSpeakerItem
