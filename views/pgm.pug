@@ -10,7 +10,7 @@
             .pgmItemTime
                 .pgmItemTimeBody {{event.time}}
             .pgmItemBody
-                .pgmItemTitle {{event.title}}
+                .pgmItemTitle(v-html="event.title")
                 .pgmItemSpeakers
                     .pgmItemSpeakersTitle(v-for="section in event.sections" v-html="section.sectionTitle")
                         .pgmItemSpeakersWr
