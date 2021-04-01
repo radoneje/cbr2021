@@ -28,6 +28,11 @@ var pgm=new Vue({
                     }
                 })
             })
+            ret.sort(function(a, b){
+                if(f.firstname < f.firstname) { return -1; }
+                if(f.firstname > f.firstname) { return 1; }
+                return 0;
+            })
             console.log("speakers", ret)
             return ret;
         },
