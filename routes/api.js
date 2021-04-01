@@ -244,9 +244,8 @@ router.post('/registerUser', async(req, res, next) =>{
   req.body.deptId=req.body.dept.id;
   req.body.deptTitle=req.body.dept.title;
   delete req.body.dept;
-  req.body.date=new Date();
-  req.body.deptTitle=""
 
+  req.body.date=new Date();
   ret=await req.knex("t_cbrf_users").insert(req.body, "*");
   req.session["user"]=ret[0];
   res.json({status:1});
