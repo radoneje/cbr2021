@@ -242,7 +242,7 @@ router.post('/registerUser', async(req, res, next) =>{
   if(ret.length==0)
     return res.json({status:-1});
   req.body.deptId=req.body.dept.id;
-  req.body.deptTitle=dept.title;
+  req.body.deptTitle=req.body.dept.title;
   delete req.body.dept;
   req.body.date=new Date();
   req.body.deptTitle=""
