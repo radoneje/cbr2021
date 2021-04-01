@@ -522,6 +522,28 @@ h1{
 .tower.headerTower{
   padding: 0;
 }
+.haedLayer{
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+
+  height: 100%;
+ // background-image: url(/images/layerback1.png);
+  background-size: 100%;
+  background-position: right;
+  background-position-y: 10%;
+  background-repeat: no-repeat;
+}
+#headLayer04, #headLayer06{
+  top:-100px;
+}
+#headLayer02{
+  top:20px;
+}
+#headLayer01{
+  top:40px;
+}
 .layerBack, .layerFront{
   position: absolute;
   width: 125%;
@@ -821,6 +843,7 @@ background-color: @litegray;
   h2{
     font-size: 18px;
     line-height: 23px;
+    margin-top: 48px;
   }
   .headerBox{
     height: 100vh;
@@ -904,6 +927,15 @@ background-color: @litegray;
     background-image: url(/images/layerback1.png);
     background-size: cover;
     background-position: top;
+    background-position-y: 0;
+    background-repeat: no-repeat;
+  }
+  .haedLayer{
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-size: cover;
+    background-position: right;
     background-position-y: 0;
     background-repeat: no-repeat;
   }

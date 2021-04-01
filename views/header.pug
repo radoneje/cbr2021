@@ -1,10 +1,14 @@
 .header
-    .headerBox
+    //.headerBox
         .layerBack
         .layerCol1
         .layerCol2
         .layerCol3
         .layerFront
+    .headerBox
+        each  i in [0,1,2,3,4,5,6]
+            .haedLayer( id="headLayer0"+i style="background-image:url(/images/0"+i+"_l.png)")
+
     .tower.headerTitleWr
         .mainLogo
             <svg width="128" height="32" viewBox="0 0 128 32" fill="none" xmlns="http://www.w3.org/2000/svg">
