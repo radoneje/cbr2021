@@ -78,9 +78,7 @@ window.addEventListener("scroll",(e)=>{
 
      pers=parseFloat(a)/200;
     elem=document.getElementById("headLayer03");
-    console.log(pers);
     elem.style.top=(20+20*pers)+"px";
-
     var pers=1-parseFloat(a)/200;
     var elem=document.getElementById("headLayer01");
     elem.style.top=(40*pers)+"px";
