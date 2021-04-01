@@ -63,7 +63,7 @@ var pgm=new Vue({
 
 })
 window.addEventListener("scroll",(e)=>{
-    console.log(window.scrollY);
+
     var a=window.scrollY;
    // if(a>200);
     //    a=200;
@@ -73,7 +73,8 @@ window.addEventListener("scroll",(e)=>{
 
      pers=parseFloat(a)/200;
     elem=document.getElementById("headLayer03");
-    elem.style.top=(80*pers)+"px";
+    console.log(pers);
+    elem.style.top=(20+20*pers)+"px";
 
     var pers=1-parseFloat(a)/200;
     var elem=document.getElementById("headLayer01");
