@@ -190,7 +190,7 @@ html
                         .adminSpkAnswItemTitleWr
                           .adminSpkAnswItemTitle {{(i+1)}} ({{parseInt(answer.perc)}}%)
                           input(:placeholder="'ответ '+(i+1) " v-model="answer.title" v-on:change="answerChange(answer)")
-                      button(v-on:click="addVoteAnswer(vote)") Добавить ответ
+                      button(v-on:click="addVoteAnswer(vote)" style="margin-left: 80px;") Добавить ответ
                       div(style="margin-top:10px")
                         button( v-if="!vote.isactive" style="cursor:pointer;" v-on:click="voteStart(vote)") Запустить
                         button( style="color:white;background:green;cursor:pointer" v-on:click="voteStart(vote)" v-else) Остановть
