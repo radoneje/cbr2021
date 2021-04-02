@@ -64,7 +64,7 @@ block content
                                 .playerChatTextHead Ответ:
                                 .playerChatTextBody {{item.answer}}
                             .playerChatDate {{moment(item.date).format('HH:mm')}}
-                        .playerChatItem(v-if="q.length==0")
+                        .playerChatItem(v-if="chat.length==0")
                             .playerChatText нет сообщений
                 .playerChatInputForm
                     input(placeholder="Напишите здесь Ваш вопрос" v-model="chatText" maxlength="1200" v-on:keyup.enter="newChat()")
