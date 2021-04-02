@@ -163,6 +163,7 @@ var pgm=new Vue({
             var objDiv = document.getElementById("qBox");
             if (objDiv != null)
                 objDiv.scrollTop = objDiv.scrollHeight;
+            this.aliveUser();
         },1000)
 
     }

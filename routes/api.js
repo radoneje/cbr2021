@@ -275,6 +275,7 @@ router.post('/aliveUser', userLogin, async(req, res, next)=> {
         c.date=moment().unix()
     })
   }
+  await req.knex.select("message").from("t_cbrf_users").where({})
   res.json({
     userid:req.session.user.id,
     date: new Date(),
