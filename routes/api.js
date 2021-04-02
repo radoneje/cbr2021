@@ -257,26 +257,26 @@ router.post('/loginUser', async(req, res, next)=> {
     return res.json(false);
   return res.json(usrs[0]);
 })
-router.post('/aliveUser', async(req, res, next)=> {
-  console.log("aliveUser", req.body)
-  if(req.counter.filter(c=>{return c.id==req.body.id}).length==0)
+router.post('/aliveUser', userLogin, async(req, res, next)=> {
+
+  if(req.counter.filter(c=>{return c.id==req.session.user.id}).length==0)
   {
-    req.counter.push({id:req.body.id, date:moment().unix()});
+    req.counter.push({id:req.session.user.id, date:moment().unix()});
     await req.knex("t_cbrf_count").insert({count:req.counter.length, date:new Date()})
     await req.knex("t_cbrf_logins").insert({
-      userid:req.body.id,
+      userid:req.session.user.id,
       date: new Date(),
     })
 
   }
   else{
     req.counter.forEach(c=>{
-      if(c.id==req.body.id)
+      if(c.id==req.session.user.id)
         c.date=moment().unix()
     })
   }
   res.json({
-    userid:req.body.id,
+    userid:req.session.user.id,
     date: new Date(),
   })
 })

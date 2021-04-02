@@ -99,7 +99,7 @@ async function clearCounter(){
 
   for(var item of deleted){
     console.log('deleted', item)
-    await knex("t_sbpb_logouts").insert({
+    await knex("t_cbrf_logouts").insert({
       userid:item.id,
       date: new Date(),
     })
@@ -112,7 +112,7 @@ async function clearCounter(){
   }
 
   if(lastCount!=counter.length)
-    await knex("t_sbpb_count").insert({count:counter.length, date:new Date()})
+    await knex("t_cbrf_count").insert({count:counter.length, date:new Date()})
   setTimeout(()=>{clearCounter()}, 20*1000);
 }
 

@@ -12,6 +12,10 @@ var pgm=new Vue({
         chatText:""
     },
     methods:{
+        aliveUser:async function () {
+                await axios.post("/api/aliveUser");
+            setTimeout(()=>{this.aliveUser()}, 20*1000);
+        },
         updateChat:async function(){
             console.log("updateChat")
             try {
@@ -182,7 +186,6 @@ window.addEventListener("scroll",(e)=>{
 var elem=document.getElementById("headerMenuWr")
   if(a>69 && elem.style.top!="0px")
       elem.style.top="0px"
-    console.log(elem.style.top, a)
   if(a<=69 && elem.style.top=="0px")
         elem.style.top="-89px"
 
