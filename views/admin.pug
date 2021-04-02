@@ -184,7 +184,7 @@ html
             .adminSectTitle Голосования ({{votes.length}})
                 .adminSpkItem(v-for="vote in votes")
                   .adminSpkItemPosition {{vote.total}}
-                    input(style="margin-left:20px; width:calc(100% - 100px)"placeholder="Вопрос для голосования" v-model="vote.title" v-on:change="voteChange(vote)")
+                    input(style="margin-left:20px; width:calc(100% - 100px)" placeholder="Вопрос для голосования" v-model="vote.title" v-on:change="voteChange(vote)")
                     .adminSpkAnswWr
                       .adminSpkAnswItem(v-for="(answer, i) in vote.answers")
                         .adminSpkAnswItemTitleWr
