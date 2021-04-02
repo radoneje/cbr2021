@@ -183,7 +183,7 @@ html
           .adminBody(v-show="!showLoader")
             .adminSectTitle Голосования ({{votes.length}})
                 .adminSpkItem(v-for="vote in votes")
-                  .adminSpkItemPosition
+                  .adminSpkItemPosition {{vote.total}}
                     input(placeholder="Вопрос для голосования" v-model="vote.title" v-on:change="voteChange(vote)")
                     .adminSpkAnswWr
                       .adminSpkAnswItem(v-for="(answer, i) in vote.answers")
