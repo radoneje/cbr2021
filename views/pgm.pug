@@ -14,7 +14,7 @@
                 .pgmItemSpeakers
                     .pgmItemSpeakersTitle(v-for="section in event.sections" ) {{section.sectionTitle}}
                         .pgmItemSpeakersWr
-                            .pgmItemSpeakerItemWr(v-for="spk in getSpeakes(section.users)")
+                            .pgmItemSpeakerItemWr(v-for="spk in getSpeakes(section.users)" v-bind:class="{noTheme:!(spk.theme && spk.theme.length>0)}")
                                 .pgmItemSpeakerItem
                                     .pgmItemSpeakerItemPhoto(:style="{ backgroundImage: `url(${spk.photo?spk.photo:'/images/nouser.png'})` }")
                                     .pgmItemSpeakerItemName  {{getSpkInit(spk)}}

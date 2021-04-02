@@ -165,11 +165,11 @@ var pgm=new Vue({
 
 })
 window.addEventListener("scroll",(e)=>{
-return;
+
     var a=window.scrollY;
    // if(a>200);
     //    a=200;
-    var pers=1-parseFloat(a)/200;
+  /*  var pers=1-parseFloat(a)/200;
     var elem=document.getElementById("headLayer02");
     elem.style.top=(20*pers)+"px";
 
@@ -178,7 +178,14 @@ return;
     elem.style.top=(-10+20*pers)+"px";
     var pers=1-parseFloat(a)/200;
     var elem=document.getElementById("headLayer01");
-    elem.style.top=(20*pers)+"px";
+    elem.style.top=(20*pers)+"px";*/
+var elem=document.getElementById("headerMenuWr")
+  if(a>69 && elem.style.top!="0px")
+      elem.style.top="0px"
+    console.log(elem.style.top, a)
+  if(a<=69 && elem.style.top=="0px")
+        elem.style.top="-89px"
+
 
 })
 var EPPZScrollTo =
