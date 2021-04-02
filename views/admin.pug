@@ -53,7 +53,7 @@ html
             .playerChatPole#chatBox
               .playerChatPoleWr
                 .playerChatItem(v-for="item in chat" v-if="!item.isDeleted ")
-                  .playerChatTitle {{moment(item.date).format('HH:mm')}} {{item.f}} {{item.i}} {{item.o}}
+                  .playerChatTitle {{moment(item.date).format('HH:mm')}} {{item.f}} {{item.i}} {{item.o}} {{item.deptTitle}}
                   .playerChatText {{item.text}}
                   .playerChatAnsw
                     textarea.playerChatAnswText(v-model="item.answer" placeholder="Напишите здесь текст ответа" v-on:change="addChatAnswer(item)")
@@ -69,7 +69,7 @@ html
               .playerChatPole#qBox
                 .playerChatPoleWr
                   .playerChatItem(v-for="item in q" v-bind:class="{ready:!item.isReady}")
-                    .playerChatTitle {{moment(item.date).format('HH:mm')}} {{item.f}} {{item.i}} {{item.o}}
+                    .playerChatTitle {{moment(item.date).format('HH:mm')}} {{item.f}} {{item.i}} {{item.o}} {{item.deptTitle}}
                     .playerChatText {{item.text}}
                     .playerChatDate.btnWr
                       .adminDeleteBtn(v-on:click="approveQ(item)" v-if="item.isReady") отменить
