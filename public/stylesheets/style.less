@@ -318,7 +318,10 @@ body {
   margin-top: 40px;
   padding-top: 40px;
   background-color: white;
-  border: 1px solid gray;
+
+}
+.pgmBody.bordered{
+  border: 1px solid @litegray;
   border-radius: 12px;
   border-left: none;
 }
@@ -350,6 +353,9 @@ body {
   background-color: @white;
   top: -3px;
   left: -4px;*/
+}
+.pgmItem:last-child{
+  border-bottom-left-radius: 12px;
 }
 .pgmItem:last-child:after{
  /* content: '';

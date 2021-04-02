@@ -5,7 +5,7 @@
             .pgmMenuItemTitle
                 div {{item.title}}
                     .pgmMenuItemSubTitle(v-if="!item.isActive") Закрытое мероприятие
-    .pgmBody
+    .pgmBody.bordered
         .pgmItem(v-for="event in pgmItem.events")
             .pgmItemTime
                 .pgmItemTimeBody {{event.time}}
