@@ -114,13 +114,7 @@ router.get("/chat", adminLogin, async(req, res, next)=> {
   ret.chat=await req.knex.select("*").from("v_cbrf_chat").orderBy("id");
   return res.json(ret);
 });
-router.get("/userChat", userLogin, async(req, res, next)=> {
-  var ret={};
-  ret.q=await req.knex.select("*").from("v_cbrf_q").where({userid:req.session.user.id}).orWhere({isReady:true}).orderBy("id");
-  ret.q=ret.q.filter(q=>!q.isDeleted);
-  ret.chat=await req.knex.select("*").from("v_cbrf_chat").where({userid:req.session.user.id}).orderBy("id");
-  return res.json(ret);
-});
+
 
 router.delete("/chat/:id",async(req, res, next)=> {
   var ret =await req.knex("t_cbrf_chat").update({isDeleted:true}, "*").where({id:req.params.id})
@@ -267,7 +261,6 @@ router.post('/aliveUser', userLogin, async(req, res, next)=> {
       userid:req.session.user.id,
       date: new Date(),
     })
-
   }
   else{
     req.counter.forEach(c=>{
@@ -275,10 +268,22 @@ router.post('/aliveUser', userLogin, async(req, res, next)=> {
         c.date=moment().unix()
     })
   }
-  await req.knex.select("message").from("t_cbrf_users").where({})
+  let messages=await req.knex.select("message").from("t_cbrf_users").where({id:req.session.user.id, messageIsActive:true})
+  let q=await req.knex.select("*").from("v_cbrf_q").where({userid:req.session.user.id}).orWhere({isReady:true}).orderBy("id");
+  q=q.filter(q=>!q.isDeleted);
+  let chat =await req.knex.select("*").from("v_cbrf_chat").where({userid:req.session.user.id}).orderBy("id");
+  console.log("messages", messages)
+  if(!messages)
+    messages=[];
+  messages=messages.filter(m=>{return m.message.length>0});
+
+  console.log("messages1", messages)
   res.json({
     userid:req.session.user.id,
     date: new Date(),
+    messages:messages,
+    q,
+    chat
   })
 })
 router.get('/count', function(req, res, next) {

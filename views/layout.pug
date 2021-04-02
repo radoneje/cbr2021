@@ -90,8 +90,9 @@ html
             </svg>
           include menu
           div(style="clear:both")
-
-
+      .messagesBox(v-bind:class="{active:messages.length>0}")
+        .messagesTitle Сообщение от организаторов
+        .messageItem(v-for="msg in messages" v-html="urlify(msg.message)")
 
     script.
       var content=!{JSON.stringify(content)}

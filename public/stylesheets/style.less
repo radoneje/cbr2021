@@ -625,6 +625,43 @@ h1{
 #headLayer04, #headLayer06{
   top:-100px;
 }
+.messagesBox{
+  background: white;
+  border-radius: 12px 0px 0 12px;
+  position: fixed;
+  top: 82px;
+  right: -100%;
+  max-width: 100%;
+  width: 300px;
+  padding: 28px;
+  box-shadow:~" 0 4px 24px rgb(85 85 85 / 16%);";
+  transition: right 2s ease;
+  box-sizing: border-box;
+}
+.messagesBox.active{
+  right: 0;
+}
+.messagesTitle{
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 24px;
+  margin-bottom: .2em;
+  background:@red;
+  padding: 10px;
+  border-radius: 12px;
+}
+.messageItem{
+  font-size: 16px;
+  margin-top: 20px;
+  line-height: 20px;
+  padding: 10px;
+  border-radius: 12px;
+  background: @litegray;
+  color:@gray
+}
+.messageItem a{
+  color:@green
+}
 
 @keyframes headLayer02 {
   0%{top:60px}
@@ -1367,6 +1404,10 @@ height:63px;
     font-size: 16px;
     line-height: 22px;
     color:@gray
+  }
+  .messagesBox{
+    top: 0;
+    width: 100%;
   }
 }
 @media (max-width:768px) {

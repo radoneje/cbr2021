@@ -9,19 +9,18 @@ var pgm=new Vue({
         q:[],
         chat:[],
         chatTextSend:false,
-        chatText:""
+        chatText:"",
+        messages:[]
     },
     methods:{
-        aliveUser:async function () {
-                await axios.post("/api/aliveUser");
-            setTimeout(()=>{this.aliveUser()}, 20*1000);
-        },
         updateChat:async function(){
-            console.log("updateChat")
+
             try {
-                var ret = await axios.get("/api/userChat");
+                var ret = await axios.post("/api/aliveUser");
+                console.log("updateChat", ret.data)
                 this.chat = ret.data.chat;
                 this.q = ret.data.q;
+                this.messages=ret.data.messages;
                 var objDiv = document.getElementById("qBox");
                 if(objDiv!=null)
                     objDiv.scrollTop = objDiv.scrollHeight;
@@ -33,7 +32,7 @@ var pgm=new Vue({
             catch (e) {
                 console.warn(e)
             }
-            setTimeout(()=>{this.updateChat()},5*1000)
+            setTimeout(()=>{this.updateChat()},20*1000)
 
 
         },
@@ -163,7 +162,6 @@ var pgm=new Vue({
             var objDiv = document.getElementById("qBox");
             if (objDiv != null)
                 objDiv.scrollTop = objDiv.scrollHeight;
-            this.aliveUser();
         },1000)
 
     }
@@ -275,3 +273,11 @@ var EPPZScrollTo =
             this.scrollVerticalTickToPosition(currentPosition, targetPosition);
         }
     };
+function urlify(text) {
+    var urlRegex = /(https?:\/\/[^\s]+)/g;
+    return text.replace(urlRegex, function(url) {
+        return '<a href="' + url + '">' + url + '</a>';
+    })
+    // or alternatively
+    // return text.replace(urlRegex, '<a href="$1">$1</a>')
+}
