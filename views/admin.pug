@@ -192,7 +192,7 @@ html
                           input(:placeholder="'ответ '+(i+1) " v-model="answer.title" v-on:change="answerChange(answer)")
                       button(v-on:click="addVoteAnswer(vote)") Добавить ответ
                       div(style="margin-top:10px")
-                        button( v-if="vote.isactive" style="cursor:pointer;" v-on:click="voteStart(vote)") Запустить
+                        button( v-if="!vote.isactive" style="cursor:pointer;" v-on:click="voteStart(vote)") Запустить
                         button( style="color:white;background:green;cursor:pointer" v-on:click="voteStart(vote)" v-else) Остановть
                         button( v-if="!vote.iscompl" style="cursor:pointer" v-on:click="voteShow(vote)") Показать результаты
                         button( style="color:white;background:green;cursor:pointer" v-on:click="voteShow(vote)" v-else) Скрыть результаты
