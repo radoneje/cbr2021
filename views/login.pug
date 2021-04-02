@@ -69,7 +69,7 @@ html
                         input.regInput#codeinput(type="text" placeholder="Код" + "*" v-model="user.code" v-on:change="checkCode(user.code)")
                         .regInputError
                             .regInputErrorTitle(v-bind:class="{active:err.code}") Поле должно быть заполнено корректно
-                            .regInputErrorTitle(v-bind:class="{active:err.codeUncorrect}") Код или Фамилия не зарегистрированы, попробуйте еще раз
+                            .regInputErrorTitle(v-bind:class="{active:err.codeUncorrect}") Код, или фамилия, или имя не зарегистрированы, попробуйте еще раз
                         .regBtn#regBtn(type="button" v-on:click="register()" v-bind:class="{disabled:!user.promice}")
                             div Войти
                             .regBtnLoaderWr(v-if="isLoad")

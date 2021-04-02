@@ -49,7 +49,8 @@ var login=new Vue({
             this.err.i=false ;
             if(f.length<2)
                 return  this.err.i=true;
-            var m=f.match(/([а-яА-ЯЁё]{2,120})/);
+            f=f.replace(/\s/g,"");
+            var m=f.match(/([а-яА-ЯЁё\-]{2,120})/);
             if(!m)
                 return this.err.i = true;
             this.user.i=m[1].substr(0,1).toUpperCase()+m[1].substring(1).toLowerCase();

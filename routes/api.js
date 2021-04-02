@@ -248,7 +248,7 @@ router.get('/count', function(req, res, next) {
 
 router.post('/registerUser', async(req, res, next) =>{
 
-  var ret=await req.knex.select("*").from("t_cbrf_codes").where({code:req.body.code,f:req.body.f});
+  var ret=await req.knex.select("*").from("t_cbrf_codes").where({code:req.body.code,f:req.body.f, i:req.body.i});
   if(ret.length==0)
     return res.json({status:-1});
   req.body.deptId=req.body.dept.id;
