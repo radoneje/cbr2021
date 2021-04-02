@@ -272,12 +272,11 @@ router.post('/aliveUser', userLogin, async(req, res, next)=> {
   let q=await req.knex.select("*").from("v_cbrf_q").where({userid:req.session.user.id}).orWhere({isReady:true}).orderBy("id");
   q=q.filter(q=>!q.isDeleted);
   let chat =await req.knex.select("*").from("v_cbrf_chat").where({userid:req.session.user.id}).orderBy("id");
-  console.log("messages", messages)
+
   if(!messages)
     messages=[];
   messages=messages.filter(m=>{return m.message.length>0});
 
-  console.log("messages1", messages)
   res.json({
     userid:req.session.user.id,
     date: new Date(),
@@ -304,6 +303,52 @@ router.post('/registerUser', async(req, res, next) =>{
   req.session["user"]=ret[0];
   res.json({status:1});
 });
+router.get('/votes', async(req, res, next) =>{
+
+//  req.knex.select("*").from("t_cbrf_codes")
+
+  var ret=await req.knex.select("*").from("t_cbrf_vote").where({isDeleted:false}).orderBy("id");;
+
+  for(var item of ret){
+    var a=await req.knex.select("*").from("t_cbrf_voteanswers").where({isDeleted:false, voteid:item.id}).orderBy("id");
+    item.answers=a
+  }
+  res.json(ret);
+
+})
+
+
+router.post('/voteAdd', adminLogin,async(req, res, next) =>{
+  var ret=await req.knex("t_cbrf_vote").insert({},"*");
+  ret[0].answers=await req.knex("t_cbrf_voteanswers").insert([{voteid:ret[0].id},{voteid:ret[0].id}],"*");
+  res.json(ret[0]);
+
+})
+router.post('/addVoteAnswer', adminLogin,async(req, res, next) =>{
+  var ret=await req.knex("t_cbrf_voteanswers").insert({voteid:req.body.id},"*");
+  res.json(ret[0]);
+
+})
+
+router.post('/voteChange', adminLogin,async(req, res, next) =>{
+  var id=req.body.id;
+  delete req.body.id;
+  delete req.body.answers;
+  var ret=await req.knex("t_cbrf_vote").update(req.body,"*").where({id:id});
+  res.json(ret[0]);
+
+})
+router.post('/answerChange', adminLogin,async(req, res, next) =>{
+  var id=req.body.id;
+  delete req.body.id;
+  var ret=await req.knex("t_cbrf_voteanswers").update({title:req.body.title},"*").where({id:id});
+  res.json(ret[0]);
+
+})
+
+
+
+
 
 
 

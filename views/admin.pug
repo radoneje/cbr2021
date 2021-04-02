@@ -14,6 +14,7 @@ html
         .adminMenuItems
           .aminMenuItem(v-on:click="sect=2" v-bind:class="{active:sect==2}") Вопросы
           .aminMenuItem(v-on:click="sect=1" v-bind:class="{active:sect==1}") Чат
+          .aminMenuItem(v-on:click="sect=8" v-bind:class="{active:sect==8}") Голосования
           .aminMenuItem(v-on:click="sect=0" v-bind:class="{active:sect==0}") Пользователи
           .aminMenuItem(v-on:click="sect=4" v-bind:class="{active:sect==4}") Статистика
           .aminMenuItem(v-on:click="sect=3" v-bind:class="{active:sect==3}") Контент
@@ -49,14 +50,14 @@ html
             .loaderText идет загрузка...
           .adminBody(v-show="!showLoader")
             .adminSectTitle Сообщаний в чате: {{chat.length}}
-          .playerChatWr
-            .playerChatPole#chatBox
-              .playerChatPoleWr
-                .playerChatItem(v-for="item in chat" v-if="!item.isDeleted ")
-                  .playerChatTitle {{moment(item.date).format('HH:mm')}} {{item.f}} {{item.i}} {{item.o}} {{item.deptTitle}}
-                  .playerChatText {{item.text}}
-                  .playerChatAnsw
-                    textarea.playerChatAnswText(v-model="item.answer" placeholder="Напишите здесь текст ответа" v-on:change="addChatAnswer(item)")
+            .playerChatWr
+              .playerChatPole#chatBox
+                .playerChatPoleWr
+                  .playerChatItem(v-for="item in chat" v-if="!item.isDeleted ")
+                    .playerChatTitle {{moment(item.date).format('HH:mm')}} {{item.f}} {{item.i}} {{item.o}} {{item.deptTitle}}
+                    .playerChatText {{item.text}}
+                    .playerChatAnsw
+                      textarea.playerChatAnswText(v-model="item.answer" placeholder="Напишите здесь текст ответа" v-on:change="addChatAnswer(item)")
 
         .adminSect(v-if="sect==2")
           .adminSectLoader.loaderWr(v-if="showLoader")
@@ -175,6 +176,30 @@ html
                     textarea#newCode(placeholder="" style="height:10em; padding:4px;width:400px;resize:none;margin:12px 0")
                   .adminSpkItemPosition
                     button(v-on:click="addCode(document.getElementById('newCode').value)") Добавить коды
+        .adminSect(v-if="sect==8" )
+          .adminSectLoader.loaderWr(v-if="showLoader")
+            .loader
+            .loaderText идет загрузка...
+          .adminBody(v-show="!showLoader")
+            .adminSectTitle Голосования ({{votes.length}})
+                .adminSpkItem(v-for="vote in votes")
+                  .adminSpkItemPosition
+                    input(placeholder="Вопрос для голосования" v-model="vote.title" v-on:change="voteChange(vote)")
+                    .adminSpkAnswWr
+                      .adminSpkAnswItem(v-for="(answer, i) in vote.answers")
+                        .adminSpkAnswItemTitleWr
+                          .adminSpkAnswItemTitle {{(i+1)}}
+                          input(:placeholder="'ответ '+(i+1) " v-model="answer.title" v-on:change="answerChange(answer)")
+                      button(v-on:click="addVoteAnswer(vote)") Добавить ответ
+                      div(style="margin-top:10px")
+                        button( v-if="vote.isactive" style="cursor:pointer;" v-on:click="voteStart(vote)") Запустить
+                        button( style="color:white;background:green;cursor:pointer" v-on:click="voteStart(vote)" v-else) Остановть
+                        button( v-if="!vote.iscompl" style="cursor:pointer" v-on:click="voteShow(vote)") Показать результаты
+                        button( style="color:white;background:green;cursor:pointer" v-on:click="voteShow(vote)" v-else) Скрыть результаты
+                .adminSpkItem
+                  .adminSpkItemWr
+                  .adminSpkItemPosition
+                    button(v-on:click="addVote()") Добавить голосование
 
 
 

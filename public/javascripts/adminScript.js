@@ -15,10 +15,50 @@ var app=new Vue({
         newSpk:{photo:null,f:"",i:"",o:"",position:"", id:0},
         redirect:[],
         newRedirect:{},
+        votes:[],
     },
     methods:{
+        addVoteAnswer:async function(vote){
+            var ret= await axios.post("/api/addVoteAnswer", vote);
+            this.votes.forEach(v=>{
+                if(v.id==vote.id)
+                    v.answers.push(ret.data);
+                })
+        },
+        answerChange:async function(vote){
+            var ret= await axios.post("/api/answerChange", vote);
+            this.votes.forEach(v=>{
+                if(v.id==ret.voteid){
+                    v.answers.forEach(a=>{
+                        if(a.id==ret.id)
+                            a=ret;
+                    })
+                }
+
+            })
+        },
+        voteShow:async function(vote){
+            vote.iscompl=!vote.iscompl;
+
+            await this.voteChange(vote);
+        },
+        voteStart:async function(vote){
+            vote.isactive=!vote.isactive;
+
+            await this.voteChange(vote);
+        },
+        voteChange:async function(vote){
+            var ret= await axios.post("/api/voteChange", vote);
+            this.votes.forEach(v=>{
+                if(v.id==ret.data.id)
+                    v=ret.data;
+            })
+        },
+        addVote:async function(){
+            var ret= await axios.post("/api/voteAdd");
+            this.votes.push(ret.data);
+        },
         messageToUser:async function(item){
-            console.log("messageToUser", item)
             item.messageIsActive=!item.messageIsActive;
             var ret=await axios.post('/api/messageToUser', {user:item});
             this.users.forEach(u=>{
@@ -68,7 +108,6 @@ var app=new Vue({
 
         },
         editRedirect:async function(item){
-            console.log("edit redirect", item)
             var ret= await axios.post("/api/redirect", item);
             item=ret.data;
         },
@@ -298,11 +337,16 @@ var app=new Vue({
                 this.codes=ret.data;
                 setTimeout(()=>{ this.showLoader=false;},200)
             }
+            if(this.sect==8){
+                var ret=await axios.get("/api/votes");
+                this.votes=ret.data;
+                setTimeout(()=>{ this.showLoader=false;},200)
+            }
         }
     },
     mounted:function () {
         this.updateChat();
-        setTimeout(()=>{ this.loaded=true; this.sect=0},0)
+        setTimeout(()=>{ this.loaded=true; this.sect=2},0)
     }
 })
 function isNormalInteger(str) {
