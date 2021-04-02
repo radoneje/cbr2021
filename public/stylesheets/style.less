@@ -10,6 +10,9 @@
 input:focus, input:active{
   outline: none !important;
 }
+body{
+  transition: opacity 1s ease;
+}
 input{
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -560,14 +563,33 @@ h1{
 #headLayer04, #headLayer06{
   top:-100px;
 }
+
+@keyframes headLayer02 {
+  0%{top:60px}
+  100%{top:0px}
+
+}
 #headLayer02{
-  top:20px;
+  top:0px;
+  animation: headLayer02 4s ease;
+}
+@keyframes headLayer03 {
+  0%{top:50px}
+  100%{top:30px}
+
 }
 #headLayer03{
-  top:20px;
+  top:30px;
+  animation: headLayer03 4s ease;
+}
+@keyframes headLayer01 {
+  0%{top:0}
+  100%{top:40px}
+
 }
 #headLayer01{
   top:40px;
+  animation: headLayer01 4s ease;
 }
 .headMenu{
   float: right;

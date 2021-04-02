@@ -63,12 +63,13 @@ var pgm=new Vue({
         }
     },
     mounted:function () {
-      console.log("vue pgm")
+        setTimeout(()=>{   document.body.style.opacity=1;},500)
+
     }
 
 })
 window.addEventListener("scroll",(e)=>{
-
+return;
     var a=window.scrollY;
    // if(a>200);
     //    a=200;
