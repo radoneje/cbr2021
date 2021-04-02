@@ -9,8 +9,12 @@ router.get('/', function(req, res, next) {
   res.json(true);
 });
 function adminLogin(req, res, next) {
-  console.log("al", req.session)
   if(req.session.admin)
+    return next();
+  res.sendStatus(401);
+}
+function userLogin(req, res, next) {
+  if(req.session.user && req.session.user.id)
     return next();
   res.sendStatus(401);
 }
@@ -58,38 +62,66 @@ router.get('/regUser', adminLogin ,async(req, res, next)=> {
   res.json(ret);
 });
 
-router.post("/chat",async(req, res, next)=> {
+
+router.post("/q",userLogin, async(req, res, next)=> {
   if(!req.body.text)
-    return res.sendStatus(404)
+    return res.sendStatus(405)
   if(!req.body.text.length>1200)
-    return res.sendStatus(404)
-  if(!req.body.userid)
-    return res.sendStatus(404)
+    return res.sendStatus(405)
 
-  var ret=await req.knex("t_cbrf_chat").insert({text:req.body.text, userid:req.body.userid, date:new Date()}, "*")
-  ret=await req.knex.select("*").from("v_cbrf_chat").where({id:ret[0].id})
 
-  res.json(ret[0]);
-});
-router.post("/q",async(req, res, next)=> {
-  if(!req.body.text)
-    return res.sendStatus(404)
-  if(!req.body.text.length>1200)
-    return res.sendStatus(404)
-  if(!req.body.userid)
-    return res.sendStatus(404)
-
-  var ret=await req.knex("t_cbrf_q").insert({text:req.body.text, userid:req.body.userid, date:new Date()}, "*")
+  var ret=await req.knex("t_cbrf_q").insert({text:req.body.text, userid:req.session.user.id, date:new Date()}, "*")
   ret=await req.knex.select("*").from("v_cbrf_q").where({id:ret[0].id})
 
   res.json(ret[0]);
 });
-router.get("/chat",async(req, res, next)=> {
+router.post("/chat",userLogin, async(req, res, next)=> {
+  if(!req.body.text)
+    return res.sendStatus(405)
+  if(!req.body.text.length>1200)
+    return res.sendStatus(405)
+
+
+  var ret=await req.knex("t_cbrf_chat").insert({text:req.body.text, userid:req.session.user.id, date:new Date()}, "*")
+  ret=await req.knex.select("*").from("v_cbrf_chat").where({id:ret[0].id})
+
+  res.json(ret[0]);
+});
+
+
+router.post("/approveQ",adminLogin, async(req, res, next)=> {
+
+  var ret=await req.knex("t_cbrf_q").update({isReady:req.body.isReady}, "*").where({id:req.body.id})
+  ret=await req.knex.select("*").from("v_cbrf_q").where({id:ret[0].id})
+  res.json(ret[0]);
+});
+router.post("/addChatAnswer",adminLogin, async(req, res, next)=> {
+
+  var ret=await req.knex("t_cbrf_chat").update({answer:req.body.answer}, "*").where({id:req.body.id})
+  ret=await req.knex.select("*").from("v_cbrf_chat").where({id:ret[0].id})
+  res.json(ret[0]);
+});
+router.delete("/deleteAllQ",adminLogin, async(req, res, next)=> {
+  var ret=await req.knex("t_cbrf_q").update({isDeleted:true}, "*")
+  res.json(1);
+});
+
+
+
+router.get("/chat", adminLogin, async(req, res, next)=> {
   var ret={};
   ret.q=await req.knex.select("*").from("v_cbrf_q").orderBy("id");;
   ret.chat=await req.knex.select("*").from("v_cbrf_chat").orderBy("id");
   return res.json(ret);
 });
+router.get("/userChat", userLogin, async(req, res, next)=> {
+  var ret={};
+  ret.q=await req.knex.select("*").from("v_cbrf_q").where({userid:req.session.user.id}).orWhere({isReady:true}).orderBy("id");
+  ret.q=ret.q.filter(q=>!q.isDeleted);
+  ret.chat=await req.knex.select("*").from("v_cbrf_chat").where({userid:req.session.user.id}).orderBy("id");
+  return res.json(ret);
+});
+
 router.delete("/chat/:id",async(req, res, next)=> {
   var ret =await req.knex("t_cbrf_chat").update({isDeleted:true}, "*").where({id:req.params.id})
   return res.json({id:req.params.id});
@@ -138,7 +170,7 @@ router.get('/redirect', adminLogin ,async(req, res, next)=> {
 });
 
 router.get('/codes', adminLogin ,async(req, res, next)=> {
-  var ret=await req.knex.select("*").from("t_cbrf_codes").orderBy("f").orderBy("io")
+  var ret=await req.knex.select("*").from("t_cbrf_codes").orderBy("f").orderBy("i").orderBy("o")
   res.json(ret);
 });
 router.post('/codes', adminLogin ,async(req, res, next)=> {
@@ -212,6 +244,12 @@ router.post('/regUser', async(req, res, next)=> {
   }, "*")
   res.json(usr[0]);
 });
+router.post('/messageToUser', async(req, res, next)=> {
+  var usr = await req.knex("t_cbrf_users").update({message:req.body.user.message, messageIsActive:req.body.user.messageIsActive}, "*").where({id:req.body.user.id})
+
+  res.json(usr[0]);
+});
+
 router.post('/loginUser', async(req, res, next)=> {
   console.log("loginUser");
   var usrs = await req.knex.select("*").from("t_cbrf_users").where({email:req.body.user.email.toLowerCase()});

@@ -54,7 +54,11 @@ router.get('/login/:lang?', async (req, res, next) =>{
   res.render('login', {  lang:req.params.lang, dept:dept });
 
 })
-
+router.get('/player', async (req, res, next) =>{
+  if(!req.session.user)
+    return next();
+  res.render("player")
+})
 router.get('/test/:lang?', async (req, res, next) =>{
   if(!req.params.lang)
     req.params.lang="ru"
@@ -81,5 +85,6 @@ router.get('/zoom/:id', async (req, res, next) =>{
   res.redirect(ret[0].value)
 
 });
+
 
 module.exports = router;

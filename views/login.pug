@@ -68,14 +68,15 @@ html
                             .regInputErrorTitle(v-bind:class="{active:err.dept}") Подразделение должнло быть выбрано
                         input.regInput#codeinput(type="text" placeholder="Код" + "*" v-model="user.code" v-on:change="checkCode(user.code)")
                         .regInputError
-                            .regInputErrorTitle(v-bind:class="{active:err.code}") Поле должно быть заполнено корректно
-                            .regInputErrorTitle(v-bind:class="{active:err.codeUncorrect}") Код, или фамилия, или имя не зарегистрированы, попробуйте еще раз
+                            .regInputErrorTitle(v-bind:class="{active:err.code}" v-if="err.code") Поле должно быть заполнено корректно
+                            .regInputErrorTitle(v-bind:class="{active:err.codeUncorrect}" v-if="err.codeUncorrect") Код, или фамилия, или имя не зарегистрированы, попробуйте еще раз
                         .regBtn#regBtn(type="button" v-on:click="register()" v-bind:class="{disabled:!user.promice}")
                             div Войти
                             .regBtnLoaderWr(v-if="isLoad")
                             .regBtnLoaderWrColor(v-if="isLoad")
                             .regBtnLoader(v-on:click.stop.prevent="void(1)" v-if="isLoad")
                                 .regBtnLoaderText Подождите, идет проверка
+                        .promice При входе Вы даете <a href="/images/promice.pdf" target="_blank"> cогласие на обработку и передачу своих персональных данных.</a>
 
         script.
             var dept=!{JSON.stringify(dept)}

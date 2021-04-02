@@ -4,9 +4,83 @@ var pgm=new Vue({
         content:content,
         pgmItem:content.pgm[0],
         speakers:speakers,
+        playerSect:0,
+        qText:"",
+        q:[],
+        chat:[],
+        chatTextSend:false,
+        chatText:""
     },
     methods:{
+        updateChat:async function(){
+            console.log("updateChat")
+            try {
+                var ret = await axios.get("/api/userChat");
+                this.chat = ret.data.chat;
+                this.q = ret.data.q;
+                var objDiv = document.getElementById("qBox");
+                if(objDiv!=null)
+                    objDiv.scrollTop = objDiv.scrollHeight;
 
+                objDiv = document.getElementById("chatBox");
+                if(objDiv!=null)
+                    objDiv.scrollTop = objDiv.scrollHeight;
+            }
+            catch (e) {
+                console.warn(e)
+            }
+            setTimeout(()=>{this.updateChat()},5*1000)
+
+
+        },
+        newQ:async function(){
+            this.chatTextSend=true
+            try{
+
+                if(this.qText.length>0){
+                    var ret=await axios.post("/api/q",{text:this.qText});
+                    this.qText="";
+                    this.q.push(ret.data);
+                    var objDiv = document.getElementById("qBox");
+                    if(objDiv)
+                        setTimeout(function () {
+                            objDiv.scrollTop = objDiv.scrollHeight;
+                        }, 0)
+                     setTimeout(()=>{this.chatTextSend=false},2000)
+                }
+                else
+                    this.chatTextSend=false
+            }
+            catch (e) {
+                console.warn(e);
+                this.chatTextSend=false
+
+            }
+        },
+        newChat:async function(){
+            this.chatTextSend=true
+            try{
+
+                if(this.chatText.length>0){
+                    var ret=await axios.post("/api/chat",{text:this.chatText});
+                    this.chatText="";
+                    this.chat.push(ret.data);
+                    var objDiv = document.getElementById("chatBox");
+                    if(objDiv)
+                        setTimeout(function () {
+                            objDiv.scrollTop = objDiv.scrollHeight;
+                        }, 0)
+                    setTimeout(()=>{this.chatTextSend=false},2000)
+                }
+                else
+                    this.chatTextSend=false
+            }
+            catch (e) {
+                console.warn(e);
+                this.chatTextSend=false
+
+            }
+        },
         getSpkInit:function(spk){
             var ret=spk.f;
             if(!spk.i || spk.i.length==0)
@@ -33,7 +107,6 @@ var pgm=new Vue({
                 if(a.f > b.f) { return 1; }
                 return 0;
             })
-            console.log("speakers", ret)
             return ret;
         },
         getModerators:function (event) {
@@ -62,8 +135,31 @@ var pgm=new Vue({
             return ret;
         }
     },
+    watch: {
+        promice: function () {
+
+            this.user.promice = this.promice;
+        },
+        chatIsActive: function () {
+            setTimeout(() => {
+                var objDiv = document.getElementById("qBox");
+                if (objDiv != null)
+                    objDiv.scrollTop = objDiv.scrollHeight;
+                objDiv = document.getElementById("chatBox");
+                if (objDiv != null)
+                    objDiv.scrollTop = objDiv.scrollHeight;
+            }, 0)
+        },
+    },
     mounted:function () {
-        setTimeout(()=>{   document.body.style.opacity=1;},500)
+        setTimeout(()=>{   document.body.style.opacity=1;
+        },500)
+        this.updateChat();
+        setTimeout(()=>{
+            var objDiv = document.getElementById("qBox");
+            if (objDiv != null)
+                objDiv.scrollTop = objDiv.scrollHeight;
+        },1000)
 
     }
 

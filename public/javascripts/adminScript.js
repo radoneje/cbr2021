@@ -17,6 +17,15 @@ var app=new Vue({
         newRedirect:{},
     },
     methods:{
+        messageToUser:async function(item){
+            console.log("messageToUser", item)
+            item.messageIsActive=!item.messageIsActive;
+            var ret=await axios.post('/api/messageToUser', {user:item});
+            this.users.forEach(u=>{
+                if(u.id==ret.id)
+                    u=ret;
+            })
+        },
         addCode:async function(txt){
             var ret=[];
             var err=false;
@@ -151,15 +160,15 @@ var app=new Vue({
         updateChat:async function(){
             try {
                 var ret = await axios.get("/api/chat");
-                this.chat = ret.data.chat;
+                var update=true;
+                var elems=document.querySelectorAll(".playerChatAnswText");
+                elems.forEach(e=>{
+                    if(document.activeElement==e)
+                        update=false;
+                })
+                if(update)
+                    this.chat = ret.data.chat;
                 this.q = ret.data.q;
-                var objDiv = document.getElementById("qBox");
-                if(objDiv!=null)
-                    objDiv.scrollTop = objDiv.scrollHeight;
-
-                objDiv = document.getElementById("chatBox");
-                if(objDiv!=null)
-                    objDiv.scrollTop = objDiv.scrollHeight;
             }
             catch (e) {
                 console.warn(e)
@@ -167,6 +176,12 @@ var app=new Vue({
             setTimeout(()=>{this.updateChat()},5*1000)
 
 
+        },
+        deleteAllQ:async function(){
+            if(confirm("Вы уверены?")){
+                await axios.delete("/api/deleteAllQ");
+                this.q=[];
+            }
         },
         deleteChat:async function(item){
             if(!confirm("Вы действительно хотите удалить сообщение?"))
@@ -178,7 +193,24 @@ var app=new Vue({
             if(!confirm("Вы действительно хотите удалить сообщение?"))
                 return false
             var res=await axios.delete("/api/q/"+item.id);
-            this.chat=this.chat.filter(c=>c.id!=item.id);
+            this.q=this.q.filter(c=>c.id!=item.id);
+        },
+        approveQ:async function(item){
+            var res=await axios.post("/api/approveQ/",{id:item.id, isReady:!item.isReady});
+            this.q.forEach(q=>{
+                if(q.id==res.data.id) {
+                    q.isReady = res.data.isReady;
+                }
+            })
+
+        },
+        addChatAnswer:async function(item){
+            var res=await axios.post("/api/addChatAnswer/",{id:item.id, answer:item.answer});
+            this.chat.forEach(q=>{
+                if(q.id==res.data.id) {
+                    q.answer = res.data.answer;
+                }
+            })
         },
         chatToQ:async function(item){
             if(!confirm("Вы действительно хотите коприровать сообщение?"))
