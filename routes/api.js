@@ -284,7 +284,8 @@ router.post('/aliveUser', userLogin, async(req, res, next)=> {
     q,
     chat
   })
-})
+});
+
 router.get('/count', function(req, res, next) {
   res.json(req.counter.length);
 });
@@ -309,9 +310,16 @@ router.get('/votes', async(req, res, next) =>{
 
   var ret=await req.knex.select("*").from("t_cbrf_vote").where({isDeleted:false}).orderBy("id");;
 
+
   for(var item of ret){
+    var total=0;
     var a=await req.knex.select("*").from("t_cbrf_voteanswers").where({isDeleted:false, voteid:item.id}).orderBy("id");
+    a.forEach(b=>{total+=b.count});
+
+    a.forEach(b=>{b.perc=parseFloat(parseFloat(b.count)/parseFloat(total==0?1:total))});
+    item.total=total;
     item.answers=a
+
   }
   res.json(ret);
 
@@ -334,6 +342,7 @@ router.post('/voteChange', adminLogin,async(req, res, next) =>{
   var id=req.body.id;
   delete req.body.id;
   delete req.body.answers;
+  delete req.body.total;
   var ret=await req.knex("t_cbrf_vote").update(req.body,"*").where({id:id});
   res.json(ret[0]);
 
