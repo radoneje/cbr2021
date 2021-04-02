@@ -188,7 +188,7 @@ html
                     .adminSpkAnswWr
                       .adminSpkAnswItem(v-for="(answer, i) in vote.answers")
                         .adminSpkAnswItemTitleWr
-                          .adminSpkAnswItemTitle {{(i+1)}} ({{parseInt(answer.perc)}}%)
+                          .adminSpkAnswItemTitle {{(answer.count)}} ({{parseInt(answer.perc)}}%)
                           input(:placeholder="'ответ '+(i+1) " v-model="answer.title" v-on:change="answerChange(answer)")
                       button(v-on:click="addVoteAnswer(vote)" style="margin-left: 80px;") Добавить ответ
                       div(style="margin-top:10px")
