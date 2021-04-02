@@ -314,12 +314,13 @@ body {
   color: @gray;
 }
 .pgmBody{
-  margin-top: 48px;
 
-  margin-top: 48px;
+  margin-top: 40px;
+  padding-top: 40px;
   background-color: white;
   border: 1px solid gray;
   border-radius: 12px;
+  border-left: none;
 }
 .pgmItem{
   display: flex;
@@ -331,7 +332,7 @@ body {
   align-items: flex-start;
 }
 .pgmItem:before{
-  content: '';
+ /* content: '';
   position: absolute;
   width: 12px;
   height: 12px;
@@ -339,16 +340,16 @@ body {
   border: 1px solid @red;
   background-color: white;
   top: 9px;
-  left: -8px;
+  left: -8px;*/
 }
 .pgmItem:first-child:after{
-  content: '';
+ /* content: '';
   position: absolute;
   width: 7px;
   height: 12px;
   background-color: @white;
   top: -3px;
-  left: -4px;
+  left: -4px;*/
 }
 .pgmItem:last-child:after{
   content: '';
