@@ -91,7 +91,7 @@ var pgm=new Vue({
             ret+=" "+ spk.i.substr(0,1).toUpperCase()+"."
             if(!spk.o || spk.o.length==0)
                 return ret;
-            ret+=" "+ spk.o.substr(0,1).toUpperCase()+"."
+            ret+=""+ spk.o.substr(0,1).toUpperCase()+"."
             return ret;
         },
         getSpeakes:function (users) {

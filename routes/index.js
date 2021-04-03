@@ -59,6 +59,9 @@ router.get('/player', async (req, res, next) =>{
     return next();
   res.render("player")
 })
+router.get('/badbrowser', async (req, res, next) =>{
+  res.render("badbrowser")
+})
 router.get('/test/:lang?', async (req, res, next) =>{
   if(!req.params.lang)
     req.params.lang="ru"
