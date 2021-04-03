@@ -47,7 +47,7 @@ router.get('/login/:lang?', async (req, res, next) =>{
     req.params.lang="ru"
   if(!(req.params.lang=="ru" || req.params.lang=="en"))
     req.params.lang="ru"
-  var dept=await req.knex.select("*").from("t_cbrf_dept").orderBy("id")
+  var dept=await req.knex.select("*").from("t_cbrf_dept").orderBy("order")
   dept.forEach(d=>{
     delete d.code;
   })
