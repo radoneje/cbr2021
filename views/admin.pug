@@ -8,19 +8,19 @@ html
     <meta name="author" content="">
     <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0">
     link(rel='stylesheet', href='/stylesheets/style.css')
-  body
+  body(style="opacity:0")
     div#app.work( v-bind:class="{visible:loaded}" )
       .adminMenu
         .adminMenuItems
-          .aminMenuItem(v-on:click="sect=2" v-bind:class="{active:sect==2}") Вопросы
-          .aminMenuItem(v-on:click="sect=1" v-bind:class="{active:sect==1}") Чат
-          .aminMenuItem(v-on:click="sect=8" v-bind:class="{active:sect==8}") Голосования
-          .aminMenuItem(v-on:click="sect=0" v-bind:class="{active:sect==0}") Пользователи
-          .aminMenuItem(v-on:click="sect=4" v-bind:class="{active:sect==4}") Статистика
-          .aminMenuItem(v-on:click="sect=3" v-bind:class="{active:sect==3}") Контент
-          .aminMenuItem(v-on:click="sect=5" v-bind:class="{active:sect==5}") Спикеры
-          .aminMenuItem(v-on:click="sect=7" v-bind:class="{active:sect==7}") Коды
-          .aminMenuItem(v-on:click="sect=6" v-bind:class="{active:sect==6}") Редирект
+          .aminMenuItem(v-on:click="sect=2" v-bind:class="{active:sect==2}" v-show="chekDisable(2)") Вопросы
+          .aminMenuItem(v-on:click="sect=1" v-bind:class="{active:sect==1}" v-show="chekDisable(1)") Чат
+          .aminMenuItem(v-on:click="sect=8" v-bind:class="{active:sect==8}" v-show="chekDisable(8)") Голосования
+          .aminMenuItem(v-on:click="sect=0" v-bind:class="{active:sect==0}" v-show="chekDisable(0)") Пользователи
+          .aminMenuItem(v-on:click="sect=4" v-bind:class="{active:sect==4}" v-show="chekDisable(4)") Статистика
+          .aminMenuItem(v-on:click="sect=3" v-bind:class="{active:sect==3}" v-show="chekDisable(3)") Контент
+          .aminMenuItem(v-on:click="sect=5" v-bind:class="{active:sect==5}" v-show="chekDisable(5)") Спикеры
+          .aminMenuItem(v-on:click="sect=7" v-bind:class="{active:sect==7}" v-show="chekDisable(7)") Коды
+          .aminMenuItem(v-on:click="sect=6" v-bind:class="{active:sect==6}" v-show="chekDisable(6)") Редирект
       .adminWr
         .adminSect(v-if="sect==0")
           .adminSectLoader.loaderWr(v-if="showLoader")
@@ -70,7 +70,7 @@ html
               .playerChatPole#qBox
                 .playerChatPoleWr
                   .playerChatItem(v-for="item in q" v-bind:class="{ready:!item.isReady}")
-                    .playerChatTitle {{moment(item.date).format('HH:mm')}} {{item.f}} {{item.i}} {{item.o}} {{item.deptTitle}}
+                    .playerChatTitle <span class="adminDop"> {{moment(item.date).format('HH:mm')}} </span> {{item.f}} {{item.i}} {{item.o}} <span class="adminDop"> {{item.deptTitle}}</span>
                     .playerChatText {{item.text}}
                     .playerChatDate.btnWr
                       .adminDeleteBtn(v-on:click="approveQ(item)" v-if="item.isReady") отменить
@@ -188,7 +188,7 @@ html
                     .adminSpkAnswWr
                       .adminSpkAnswItem(v-for="(answer, i) in vote.answers")
                         .adminSpkAnswItemTitleWr
-                          .adminSpkAnswItemTitle {{(answer.count)}} ({{parseInt(answer.perc)}}%)
+                          .adminSpkAnswItemTitle {{(answer.count)}} ({{parseInt(answer.perc*100)}}%)
                           input(:placeholder="'ответ '+(i+1) " v-model="answer.title" v-on:change="answerChange(answer)")
                       button(v-on:click="addVoteAnswer(vote)" style="margin-left: 80px;") Добавить ответ
                       div(style="margin-top:10px")
@@ -203,7 +203,7 @@ html
 
 
 
-
+    script var disable=!{JSON.stringify(disable)}
     script(src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js")
     script(src='/javascripts/vue.min.js')
     script(src='/javascripts/moment.min.js')

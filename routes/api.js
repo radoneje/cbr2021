@@ -307,9 +307,7 @@ router.post('/registerUser', async(req, res, next) =>{
 router.get('/votes', async(req, res, next) =>{
 
 //  req.knex.select("*").from("t_cbrf_codes")
-
   var ret=await req.knex.select("*").from("t_cbrf_vote").where({isDeleted:false}).orderBy("id");;
-
 
   for(var item of ret){
     var total=0;
@@ -324,6 +322,24 @@ router.get('/votes', async(req, res, next) =>{
   res.json(ret);
 
 })
+router.post('/voting', userLogin, async(req, res, next) =>{
+  var a=await req.knex.select("*").from("t_cbrf_voteanswers").where({id:req.body.id})
+  await req.knex("t_cbrf_voteanswers").update({count:(a[0].count+1)}).where({id:req.body.id})
+  res.json(req.body.id)
+});
+
+router.post('/unvote', userLogin, async(req, res, next) =>{
+  for(var item of req.body) {
+
+    var a = await req.knex.select("*").from("t_cbrf_voteanswers").where({id: item.id})
+    if(a[0].count>0) {
+      console.log("unvote", {count: (a[0].count - 1), id:req.body.id})
+      await req.knex("t_cbrf_voteanswers").update({count: (a[0].count - 1)}).where({id: item.id})
+    }
+  }
+  res.json(req.body.id)
+});
+
 
 
 router.post('/voteAdd', adminLogin,async(req, res, next) =>{

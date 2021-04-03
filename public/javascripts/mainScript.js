@@ -10,14 +10,43 @@ var pgm=new Vue({
         chat:[],
         chatTextSend:false,
         chatText:"",
-        messages:[]
+        messages:[],
+        votes:[],
+        myVotes:[],
     },
     methods:{
+        checkVote: function(answer){
+            console.log(this.myVotes.filter(v=>v.voteid==answer.voteid && v.id==answer.id).length>0)
+            return this.myVotes.filter(v=>v.voteid==answer.voteid && v.id==answer.id).length>0
+        },
+        voting:async function(answer){
+
+             var myVote={voteid:answer.voteid, id:answer.id};
+             var len=this.myVotes.length;
+             var old=this.myVotes.filter(v=>v.voteid==myVote.voteid);
+             if(old.length>0){
+                 await axios.post("/api/unvote",old);
+                 this.myVotes=this.myVotes.filter(v=>v.voteid!=myVote.voteid);
+             }
+            this.myVotes.push(myVote);
+            await axios.post("/api/voting",myVote);
+            localStorage.setItem("votes",JSON.stringify(this.myVotes) )
+        },
+        updateVote:async function(){
+            try {
+                var ret = await axios.get("/api/votes");
+                this.votes = ret.data;
+            }
+            catch (e) {
+                console.warn(e)
+            }
+            setTimeout(()=>{this.updateVote()},20*1000)
+
+        },
         updateChat:async function(){
 
             try {
                 var ret = await axios.post("/api/aliveUser");
-                console.log("updateChat", ret.data)
                 this.chat = ret.data.chat;
                 this.q = ret.data.q;
                 this.messages=ret.data.messages;
@@ -155,9 +184,19 @@ var pgm=new Vue({
         },
     },
     mounted:function () {
+        try {
+            var jsonvotes = localStorage.getItem("votes")
+            if (jsonvotes) {
+                this.myVotes = JSON.parse(jsonvotes)
+
+            }
+        }catch (e) {
+           console.warn(e)
+        }
         setTimeout(()=>{   document.body.style.opacity=1;
         },500)
         this.updateChat();
+        this.updateVote();
         setTimeout(()=>{
             var objDiv = document.getElementById("qBox");
             if (objDiv != null)

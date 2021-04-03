@@ -16,8 +16,12 @@ var app=new Vue({
         redirect:[],
         newRedirect:{},
         votes:[],
+        disable,
     },
     methods:{
+        chekDisable:function(item){
+            return !disable.filter(d=>d==item).length>0
+        },
         addVoteAnswer:async function(vote){
             var ret= await axios.post("/api/addVoteAnswer", vote);
             this.votes.forEach(v=>{
@@ -347,6 +351,8 @@ var app=new Vue({
     mounted:function () {
         this.updateChat();
         setTimeout(()=>{ this.loaded=true; this.sect=2},0)
+        setTimeout(()=>{   document.body.style.opacity=1;
+        },500)
     }
 })
 function isNormalInteger(str) {

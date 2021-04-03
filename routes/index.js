@@ -5,7 +5,7 @@ var content=require('./../content')
 
 router.get('/admin', async (req, res, next) =>{
   if(req.session.admin)
-    res.render('admin', { title: 'admin' });
+    res.render('admin', { title: 'admin' ,disable:[] });
   else
     res.render('adminLogin', { title: 'admin' });
 });
@@ -16,7 +16,24 @@ router.post('/admin', async (req, res, next) =>{
   else
   {
     req.session.admin=true;
-    res.render('admin', { title: 'admin' });
+    res.render('admin', { title: 'admin' ,disable:[] });
+  }
+});
+
+router.get('/moderator', async (req, res, next) =>{
+  if(req.session.admin)
+    res.render('admin', { title: 'admin' ,disable:[1,0,3,5,6,7] });
+  else
+    res.render('adminLogin', { title: 'admin' });
+});
+
+router.post('/moderator', async (req, res, next) =>{
+  if(req.body.l!="editor" || req.body.p!="dfczgegrby" )
+    res.render('adminlogin', { title: 'admin' });
+  else
+  {
+    req.session.admin=true;
+    res.render('admin', { title: 'admin' ,disable:[1,0,3,5,6,7] });
   }
 });
 
@@ -59,6 +76,7 @@ router.get('/player', async (req, res, next) =>{
     return next();
   res.render("player")
 })
+
 router.get('/badbrowser', async (req, res, next) =>{
   res.render("badbrowser")
 })

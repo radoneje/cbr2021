@@ -23,6 +23,8 @@ block content
                 iframe(src="/player" allowfullscreen="" width="640" height="360" frameborder="none")
 
         .playerRight
+            .voteWr(v-if="votes.length>0")
+                include votes
             .playerRightHead
                 .playerMenu
                     .playerMenuItem(v-bind:class="{active:playerSect==0}" v-on:click="playerSect=0")
