@@ -114,6 +114,11 @@ router.get("/chat", adminLogin, async(req, res, next)=> {
   ret.chat=await req.knex.select("*").from("v_cbrf_chat").orderBy("id");
   return res.json(ret);
 });
+router.get("/q", async(req, res, next)=> {
+  var ret={};
+  ret.q=await req.knex.select("*").from("v_cbrf_q").orderBy("id");;
+  return res.json(ret);
+});
 
 
 router.delete("/chat/:id",async(req, res, next)=> {

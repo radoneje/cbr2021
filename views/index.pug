@@ -23,7 +23,7 @@ block content
                 iframe(src="/player" allowfullscreen="" width="640" height="360" frameborder="none")
 
         .playerRight
-            .voteWr(v-if="votes.length>0")
+            .voteWr(v-if="votes.filter(v=>v.isactive).length>0")
                 include votes
             .playerRightHead
                 .playerMenu
@@ -43,13 +43,7 @@ block content
                         .playerMenuItemTitle Техподдержка
             .playerChatWr(v-if="playerSect==0")
                 .playerChatPole#qBox
-                    .playerChatPoleWr
-                        .playerChatItem(v-for="item in q" v-if="")
-                            .playerChatTitle {{item.i}} {{item.o}}
-                            .playerChatText {{item.text}}
-                            .playerChatDate {{moment(item.date).format('HH:mm')}}
-                        .playerChatItem(v-if="q.length==0")
-                            .playerChatText нет сообщений
+                    include q
                 .playerChatInputForm
                     //textarea(placeholder="Напишите здесь Ваш вопрос" v-model="qText" maxlength="1200"  )
                     input(placeholder="Напишите здесь Ваш вопрос" v-model="qText" maxlength="1200" v-on:keyup.enter="newQ()")

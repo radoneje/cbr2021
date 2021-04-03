@@ -7,6 +7,9 @@ var content=require('./../content')
 router.get('/vote', async (req, res, next) =>{
 res.render("screenVote")
 })
+router.get('/q', async (req, res, next) =>{
+  res.render("screenQ")
+})
 
 
 router.get('/zoom/:id', async (req, res, next) =>{
