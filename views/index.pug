@@ -43,7 +43,13 @@ block content
                         .playerMenuItemTitle Техподдержка
             .playerChatWr(v-if="playerSect==0")
                 .playerChatPole#qBox
-                    include q
+                    .playerChatPoleWr
+                        .playerChatItem(v-for="item in q" )
+                            .playerChatTitle  {{item.i}} {{item.o}}
+                            .playerChatText {{item.text}}
+                            .playerChatDate {{moment(item.date).format('HH:mm')}}
+                        .playerChatItem(v-if="q.length==0")
+                            .playerChatText нет сообщений
                 .playerChatInputForm
                     //textarea(placeholder="Напишите здесь Ваш вопрос" v-model="qText" maxlength="1200"  )
                     input(placeholder="Напишите здесь Ваш вопрос" v-model="qText" maxlength="1200" v-on:keyup.enter="newQ()")
