@@ -46,7 +46,7 @@ block content
                 .playerChatPole#qBox
                     .playerChatPoleWr
                         .playerChatItem(v-for="item in q" )
-                            .playerChatTitle  {{item.i}} {{item.o}}
+                            .playerChatTitle  {{item.f}} {{item.i}}
                             .playerChatText {{item.text}}
                             .playerChatDate {{moment(item.date).format('HH:mm')}}
                         .playerChatItem(v-if="q.length==0")
