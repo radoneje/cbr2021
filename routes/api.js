@@ -112,7 +112,7 @@ router.get("/chat", adminLogin, async(req, res, next)=> {
   var ret={};
   ret.q=await req.knex.select("*").from("v_cbrf_q").orderBy("id");;
   ret.chat=await req.knex.select("*").from("v_cbrf_chat").orderBy("id");
-  ret.state=req.state;
+  ret.state=(await req.knex.select("*").from("t_cbrf_state"))[0].val;
   return res.json(ret);
 });
 
@@ -290,7 +290,7 @@ router.post('/aliveUser', userLogin, async(req, res, next)=> {
     messages:messages,
     q,
     chat,
-    state:req.state
+    state:(await req.knex.select("*").from("t_cbrf_state"))[0].val
   })
 });
 
@@ -381,7 +381,8 @@ router.post('/answerChange', adminLogin,async(req, res, next) =>{
 
 router.post('/state', adminLogin,async(req, res, next) =>{
   req.state=req.body;
-  await knex("t_cbrf_state").update({val:JSON.stringify(req.state)});
+  console.log("req.state", req.state)
+  await req.knex("t_cbrf_state").update({val:JSON.stringify(req.state)});
   res.json(req.state);
 })
 
