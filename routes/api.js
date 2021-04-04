@@ -381,17 +381,8 @@ router.post('/answerChange', adminLogin,async(req, res, next) =>{
 
 router.post('/state', adminLogin,async(req, res, next) =>{
   req.state=req.body;
-  console.log(" req.state",  req.state)
-  try{
-    fs.writeFileSync(path.join(__dirname, "../config/","state.json"), JSON.stringify(req.state))
-  }
-  catch (e) {
-    console.warn(e)
-  }
-
-
+  await knex("t_cbrf_state").update({val:JSON.stringify(req.state)});
   res.json(req.state);
-
 })
 
 

@@ -70,13 +70,17 @@ var state={
   q:true,
   chat:true
 }
-try{
-  var ret=fs.readFileSync(path.join(__dirname,"config","state.json"))
-  state = JSON.parse(ret);
-}
-catch (e) {
-  console.warn(e)
-}
+knex.select("*").from("t_cbrf_state")
+    .then(async ret=>{
+      if(ret.length>0) {
+        state = ret[0].val;
+      }
+      else
+        await knex("t_cbrf_state").insert({val:JSON.stringify(state)});
+    })
+    .catch(e=>{console.warn(e)});
+
+
 
 app.use("/", (req,res, next)=>{req.state=state; next()});
 app.use("/", (req,res, next)=>{req.knex=knex;next();});
