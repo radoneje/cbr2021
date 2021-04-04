@@ -78,7 +78,7 @@ html
                     .playerChatDate.btnWr
                       .adminDeleteBtn(v-on:click="approveQ(item)" v-if="item.isReady") отменить
                       .adminDeleteBtn(v-on:click="approveQ(item)" v-else) принять сообщение
-                      .adminDeleteBtn(v-on:click="deleteQ(item)" style="float:right") удвлить
+                      .adminDeleteBtn(v-on:click="deleteQ(item)" style="float:right") удалить
                       div(style="clear:both")
             .adminDeleteBtn(v-on:click="deleteAllQ()") удалить все
         .adminSect(v-if="sect==3")
