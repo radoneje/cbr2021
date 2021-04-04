@@ -112,8 +112,10 @@ router.get("/chat", adminLogin, async(req, res, next)=> {
   var ret={};
   ret.q=await req.knex.select("*").from("v_cbrf_q").orderBy("id");;
   ret.chat=await req.knex.select("*").from("v_cbrf_chat").orderBy("id");
+  ret.state=req.state;
   return res.json(ret);
 });
+
 router.get("/q", async(req, res, next)=> {
   var ret={};
   ret.q=await req.knex.select("*").from("v_cbrf_q").where({isReady:true}).orderBy("id");;
@@ -287,7 +289,8 @@ router.post('/aliveUser', userLogin, async(req, res, next)=> {
     date: new Date(),
     messages:messages,
     q,
-    chat
+    chat,
+    state:req.state
   })
 });
 
@@ -375,6 +378,22 @@ router.post('/answerChange', adminLogin,async(req, res, next) =>{
   res.json(ret[0]);
 
 })
+
+router.post('/state', adminLogin,async(req, res, next) =>{
+  req.state=req.body;
+  console.log(" req.state",  req.state)
+  try{
+    fs.writeFileSync(path.join(__dirname, "../config/","state.json"), JSON.stringify(req.state))
+  }
+  catch (e) {
+    console.warn(e)
+  }
+
+
+  res.json(req.state);
+
+})
+
 
 
 

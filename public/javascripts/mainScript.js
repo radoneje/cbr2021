@@ -13,6 +13,7 @@ var pgm=new Vue({
         messages:[],
         votes:[],
         myVotes:[],
+        state:{q:true, chat:true}
     },
     methods:{
         checkVote: function(answer){
@@ -49,6 +50,7 @@ var pgm=new Vue({
                 var ret = await axios.post("/api/aliveUser");
                 this.chat = ret.data.chat;
                 this.q = ret.data.q;
+                this.state = ret.data.state;
                 this.messages=ret.data.messages;
                 var objDiv = document.getElementById("qBox");
                 if(objDiv!=null)

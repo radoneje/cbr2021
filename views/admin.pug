@@ -65,9 +65,12 @@ html
             .loaderText идет загрузка...
           .adminBody(v-show="!showLoader")
             .adminSectTitle Вопросов: {{q.length}}
-              .adminDeleteBtn(v-on:click="deleteAllQ()") удалить все
+            .adminDeleteBtn(v-on:click="visibleQ(false)" v-if="state.q") Выключить вопросы
+            div(v-else)
+              div ВОПРОСЫ ВЫКЛЮЧЕНЫ!
+              .adminDeleteBtn(v-on:click="visibleQ(true)" ) Включить вопросы
             .playerChatWr
-              .playerChatPole#qBox
+              .playerChatPole#qBox(v-show="state.q")
                 .playerChatPoleWr
                   .playerChatItem(v-for="item in q" v-bind:class="{ready:!item.isReady}")
                     .playerChatTitle <span class="adminDop"> {{moment(item.date).format('HH:mm')}} </span> {{item.f}} {{item.i}} {{item.o}} <span class="adminDop"> {{item.deptTitle}}</span>
@@ -77,6 +80,7 @@ html
                       .adminDeleteBtn(v-on:click="approveQ(item)" v-else) принять сообщение
                       .adminDeleteBtn(v-on:click="deleteQ(item)" style="float:right") удвлить
                       div(style="clear:both")
+            .adminDeleteBtn(v-on:click="deleteAllQ()") удалить все
         .adminSect(v-if="sect==3")
           .adminSectLoader.loaderWr(v-if="showLoader")
             .loader
@@ -204,7 +208,7 @@ html
 
 
     script var disable=!{JSON.stringify(disable)}
-    script(src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js")
+    script(src="/javascripts/axios.min.js")
     script(src='/javascripts/vue.min.js')
     script(src='/javascripts/moment.min.js')
     script(src="https://cdn.anychart.com/releases/8.9.0/js/anychart-base.min.js")

@@ -17,8 +17,14 @@ var app=new Vue({
         newRedirect:{},
         votes:[],
         disable,
+        state:{q:true, chat:true}
     },
     methods:{
+        visibleQ:async function(val){
+            this.state.q=val;
+           var ret = await axios.post("/api/state", this.state);
+            this.state=ret.data;
+        },
         chekDisable:function(item){
             return !disable.filter(d=>d==item).length>0
         },
@@ -212,6 +218,7 @@ var app=new Vue({
                 if(update)
                     this.chat = ret.data.chat;
                 this.q = ret.data.q;
+                this.state = ret.data.state;
             }
             catch (e) {
                 console.warn(e)

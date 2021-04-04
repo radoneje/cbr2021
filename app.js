@@ -1,6 +1,7 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+var fs = require('fs');
 var cookieParser = require('cookie-parser');
 var lessMiddleware = require('less-middleware');
 var logger = require('morgan');
@@ -65,6 +66,19 @@ app.use(cookieParser());
 app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
+var state={
+  q:true,
+  chat:true
+}
+try{
+  var ret=fs.readFileSync(path.join(__dirname,"config","state.json"))
+  state = JSON.parse(ret);
+}
+catch (e) {
+  console.warn(e)
+}
+
+app.use("/", (req,res, next)=>{req.state=state; next()});
 app.use("/", (req,res, next)=>{req.knex=knex;next();});
 app.use("/", (req,res, next)=>{req.counter=counter;next();});
 

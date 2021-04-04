@@ -1008,6 +1008,15 @@ background-color: @litegray;
 }
 .playerLeft{
   width: 66%;
+  transition: width .5s ease;
+}
+.playerBox.fullScreen{
+  max-width: 980px;
+  margin:0 auto;
+  margin-top: -118px;
+}
+.playerBox.fullScreen .playerLeft{
+  width: 100%
 }
 .playerLeftHead{
   padding: 16px 48px;
@@ -1567,7 +1576,7 @@ border-radius: 0 8px 8px 0 ;
     border-bottom: 1px solid @white;
     text-align: center;
   }
-  .playerBox{
+  .playerBox, .playerBox.fullScreen {
     display: block;
     margin-top: 0px;
     box-shadow: none;
