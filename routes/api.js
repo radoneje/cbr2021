@@ -307,17 +307,27 @@ router.get('/count', function(req, res, next) {
 
 router.post('/registerUser', async(req, res, next) =>{
 
-  var ret=await req.knex.select("*").from("t_cbrf_codes").where({code:req.body.code,f:req.body.f, i:req.body.i});
-  if(ret.length==0)
-    return res.json({status:-1});
-  req.body.deptId=req.body.dept.id;
-  req.body.deptTitle=req.body.dept.title;
-  delete req.body.dept;
+  try {
+    var ret = await req.knex.select("*").from("t_cbrf_codes").where({
+      code: req.body.code,
+      f: req.body.f,
+      i: req.body.i
+    });
+    if (ret.length == 0)
+      return res.json({status: -1});
+    req.body.deptId = req.body.dept.id;
+    req.body.deptTitle = req.body.dept.title;
+    delete req.body.dept;
 
-  req.body.date=new Date();
-  ret=await req.knex("t_cbrf_users").insert(req.body, "*");
-  req.session["user"]=ret[0];
-  res.json({status:1});
+    req.body.date = new Date();
+
+    ret = await req.knex("t_cbrf_users").insert(req.body, "*");
+    req.session["user"] = ret[0];
+    res.json({status: 1});
+  }
+  catch (e) {
+    res.status(500).json(e);
+  }
 });
 router.get('/votes', async(req, res, next) =>{
 
