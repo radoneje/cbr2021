@@ -10,7 +10,9 @@ res.render("screenVote")
 router.get('/q', async (req, res, next) =>{
   res.render("screenQ")
 })
-
+router.get('/spk', async (req, res, next) =>{
+  res.render("screenSpk")
+})
 
 router.get('/zoom/:id', async (req, res, next) =>{
   //res.render('work', { title: 'under constaction' });

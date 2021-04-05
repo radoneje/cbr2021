@@ -254,6 +254,17 @@ var app=new Vue({
             })
 
         },
+        spkQ:async function(item){
+            var res=await axios.post("/api/spkQ/",{id:item.id, isSpk:!item.isSpk});
+            this.q.forEach(q=>{
+                if(q.id==res.data.id) {
+                    console.log(res.data.isSpk)
+                    q.isSpk = res.data.isSpk;
+                }
+            })
+        //    this.q=this.q.filter(()=>{return true})
+
+        },
         addChatAnswer:async function(item){
             var res=await axios.post("/api/addChatAnswer/",{id:item.id, answer:item.answer});
             this.chat.forEach(q=>{
