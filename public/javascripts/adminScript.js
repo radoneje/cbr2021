@@ -90,8 +90,9 @@ var app=new Vue({
                         var elem={
                             code:item[0],
                             f:item[1],
-                            io:item[2],
-                            sourceDept:item[3]
+                            i:item[2],
+                            o:item[3],
+                            sourceDept:item[4]
                         }
                         ret.push(elem)
                     }
