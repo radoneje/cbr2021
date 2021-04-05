@@ -42,7 +42,7 @@ var login=new Vue({
             var m=f.match(/([а-яА-ЯЁё\-]{2,120})/);
             if(!m)
                 return this.err.f = true;
-            this.user.f=m[1].substr(0,1).toUpperCase()+m[1].substring(1).toLowerCase();
+            this.user.f=m[1].substr(0,1).toUpperCase()+m[1].substring(1);
             this.err.codeUncorrect=false;
         },
         checki:function(f){
@@ -53,7 +53,7 @@ var login=new Vue({
             var m=f.match(/([а-яА-ЯЁё\-]{2,120})/);
             if(!m)
                 return this.err.i = true;
-            this.user.i=m[1].substr(0,1).toUpperCase()+m[1].substring(1).toLowerCase();
+            this.user.i=m[1].substr(0,1).toUpperCase()+m[1].substring(1);
         },
         checkCode:function(f){
             this.err.code=false ;
