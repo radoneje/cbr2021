@@ -42,7 +42,7 @@ router.get('/', async (req, res, next) =>{
   res.redirect("/index/ru")
 
 });
-router.get('/index/:lang?', async (req, res, next) =>{
+/*router.get('/index/:lang?', async (req, res, next) =>{
   if(!req.params.lang)
     req.params.lang="ru"
   req.params.lang=req.params.lang.toLowerCase();
@@ -56,7 +56,7 @@ router.get('/index/:lang?', async (req, res, next) =>{
   res.render('start')
  // res.render('index', {  lang:req.params.lang, speakers:speakers, site:content[0].site, content:content[0].content });
 
-});
+});*/
 
 router.get('/login/:lang?', async (req, res, next) =>{
   req.session["user"]=null;
@@ -80,7 +80,7 @@ router.get('/player', async (req, res, next) =>{
 router.get('/badbrowser', async (req, res, next) =>{
   res.render("badbrowser")
 })
-router.get('/test/:lang?', async (req, res, next) =>{
+router.get('/index/:lang?', async (req, res, next) =>{
   if(!req.params.lang)
     req.params.lang="ru"
   req.params.lang=req.params.lang.toLowerCase();

@@ -27,7 +27,7 @@ var login=new Vue({
             if(res.data.status<0)
                 return setTimeout(()=>{ this.err.codeUncorrect=true;this.isLoad=false},1000)
             setTimeout(()=>{
-                document.location.href=("/test/");
+                document.location.href=("/index/");
             },1000)
         },
         checkDep:function(f){
