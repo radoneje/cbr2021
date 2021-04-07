@@ -314,13 +314,13 @@ var app=new Vue({
             }
             if(this.sect==4){
                 var ret=await axios.get("/api/stat");
-                delete ret.data.counts;
+
                 this.stat=ret.data;
-                console.log(ret.data);
+
                 var chartData=[];
-               /* ret.data.counts.forEach(c=>{
+                ret.data.counts.forEach(c=>{
                     chartData.push([c.date,c.count])
-                })*/
+                })
                 var chart = anychart.area();
                 // set the data
                 chart.data(chartData/*[
