@@ -314,6 +314,7 @@ var app=new Vue({
             }
             if(this.sect==4){
                 var ret=await axios.get("/api/stat");
+                delete ret.data.counts;
                 this.stat=ret.data;
                 console.log(ret.data);
                 var chartData=[];
