@@ -154,7 +154,7 @@ router.get('/stat', adminLogin ,async(req, res, next)=> {
   var ret={};
   ret.now=req.counter.length;
   ret.loginsCount=(await req.knex.select("*").from("t_cbrf_logins")).length;
-  ret.counts= await req.knex.select("*").from("t_cbrf_count").where('date','>=', moment().add(-1, 'hours').toISOString())
+  ret.counts=[];// await req.knex.select("*").from("t_cbrf_count").where('date','>=', moment().add(-1, 'hours').toISOString())
   res.json(ret);
 });
 router.get('/spk', adminLogin ,async(req, res, next)=> {
