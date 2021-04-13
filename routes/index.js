@@ -38,6 +38,7 @@ router.post('/moderator', async (req, res, next) =>{
 });
 
 router.get('/', async (req, res, next) =>{
+  return res.render('start');
   //res.render('work', { title: 'under constaction' });
   res.redirect("/index/ru")
 
@@ -59,6 +60,8 @@ router.get('/', async (req, res, next) =>{
 });*/
 
 router.get('/login/:lang?', async (req, res, next) =>{
+  return res.render('start');
+
   req.session["user"]=null;
   if(!req.params.lang)
     req.params.lang="ru"
@@ -81,6 +84,7 @@ router.get('/badbrowser', async (req, res, next) =>{
   res.render("badbrowser")
 })
 router.get('/index/:lang?', async (req, res, next) =>{
+  return res.render('start');
   if(!req.params.lang)
     req.params.lang="ru"
   req.params.lang=req.params.lang.toLowerCase();
